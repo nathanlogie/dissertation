@@ -32,3 +32,4 @@ for column in categorical_columns:
 
 clean_csv_filename = "../../processed_datasets/german_credit.csv"
 data.to_csv(clean_csv_filename, index=False)
+print("Cleaned CSV created")
