@@ -21,7 +21,7 @@ data.drop("education-num", axis=1)
 data['income'] = data['income'].apply(lambda x: 1 if x.strip() == '>50K' else 0) # Target Value
 data['sex'] = data['sex'].apply(lambda x: 1 if x.strip() == 'Male' else 0)
 
-categorical_columns = ['workclass', 'education', 'marital-status', 'occupation', 'relationship', 'native-country']
+categorical_columns = ['race','workclass', 'education', 'marital-status', 'occupation', 'relationship', 'native-country']
 
 for column in categorical_columns:
     data = one_hot_encode_column(data, column)
