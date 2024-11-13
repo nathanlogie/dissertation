@@ -1,7 +1,7 @@
 import pandas as pd
 from dataset_processing.helper_functions import one_hot_encode_column
 
-# Headers as of the adult.names file
+# Headers as of the dataset.names file
 # age,workclass, fnlwgt, education, education-num, marital-status:, occupation, relationship, race, sex, capital-gain,
 # capital-loss,hours-per-week, native-country
 column_names = [
@@ -10,7 +10,7 @@ column_names = [
     "capital-gain", "capital-loss", "hours-per-week", "native-country", "income"
 ]
 
-data = pd.read_csv("../adult/adult.data", header=None, names=column_names, na_values='?', skipinitialspace=True)
+data = pd.read_csv("../dataset/adult.data", header=None, names=column_names, na_values='?', skipinitialspace=True)
 
 data.dropna(inplace=True)
 
