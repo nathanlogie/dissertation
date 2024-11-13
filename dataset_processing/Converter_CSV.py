@@ -1,5 +1,5 @@
 import pandas as pd
-from sklearn.preprocessing import OrdinalEncoder, OneHotEncoder
+from dataset_processing.helper_functions import one_hot_encode_column
 
 # Headers as of the adult.names file
 # age,workclass, fnlwgt, education, education-num, marital-status:, occupation, relationship, race, sex, capital-gain,
@@ -14,22 +14,17 @@ data = pd.read_csv("../adult/adult.data", header=None, names=column_names, na_va
 
 data.dropna(inplace=True)
 
-# Making the categorical data numerical
+# This column will be encoded as part of processing so is unnecessary here
+data.drop("education-num")
+
+# Making the binary data numerical
 data['income'] = data['income'].apply(lambda x: 1 if x.strip() == '>50K' else 0) # Target Value
 data['sex'] = data['sex'].apply(lambda x: 1 if x.strip() == 'Male' else 0)
 
-ord_encoder = OrdinalEncoder()
+categorical_columns = ['workclass', 'education', 'marital-status', 'occupation', 'relationship', 'native-country']
 
-onehot_encoder = OneHotEncoder(sparse_output=False, drop='first')
-encoded_workclass_df = pd.DataFrame(
-    onehot_encoder.fit_transform(data[['workclass']]),
-    columns=onehot_encoder.get_feature_names_out(['workclass'])
-)
-data = data.drop(columns=['workclass']).reset_index(drop=True)
-data = pd.concat([data, encoded_workclass_df], axis=1)
-
-data['race'] = ord_encoder.fit_transform(data[['race']])
-data['workclass'] = ord_encoder.fit_transform(data[['workclass']])
+for column in categorical_columns:
+    data = one_hot_encode_column(data, column)
 
 # Producing the final CSV
 clean_csv_filename = "adult.csv"
