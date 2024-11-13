@@ -1,7 +1,7 @@
 import pandas as pd
 from dataset_processing.helper_functions import one_hot_encode_column
 
-# Headers as of the dataset.names file
+# Headers as of the raw_datasets.names file
 # age,workclass, fnlwgt, education, education-num, marital-status:, occupation, relationship, race, sex, capital-gain,
 # capital-loss,hours-per-week, native-country
 column_names = [
@@ -10,7 +10,7 @@ column_names = [
     "capital-gain", "capital-loss", "hours-per-week", "native-country", "income"
 ]
 
-data = pd.read_csv("../dataset/adult.data", header=None, names=column_names, na_values='?', skipinitialspace=True)
+data = pd.read_csv("../../raw_datasets/Census_Income/adult.data", header=None, names=column_names, na_values='?', skipinitialspace=True)
 
 data.dropna(inplace=True)
 
@@ -27,5 +27,5 @@ for column in categorical_columns:
     data = one_hot_encode_column(data, column)
 
 # Producing the final CSV
-clean_csv_filename = "adult.csv"
+clean_csv_filename = "../../processed_datasets/adult.csv"
 data.to_csv(clean_csv_filename, index=False)
