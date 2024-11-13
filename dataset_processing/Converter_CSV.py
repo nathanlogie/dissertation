@@ -15,7 +15,7 @@ data = pd.read_csv("../adult/adult.data", header=None, names=column_names, na_va
 data.dropna(inplace=True)
 
 # This column will be encoded as part of processing so is unnecessary here
-data.drop("education-num")
+data.drop("education-num", axis=1)
 
 # Making the binary data numerical
 data['income'] = data['income'].apply(lambda x: 1 if x.strip() == '>50K' else 0) # Target Value
