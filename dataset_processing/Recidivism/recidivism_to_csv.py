@@ -13,8 +13,9 @@ data = data[['sex', 'age', 'age_cat', 'race',
 # Target value is already in binary
 data['sex'] = data['sex'].apply(lambda x: 1 if x.strip() == 'Female' else 0)
 data['race'] = data['race'].apply(lambda x: 1 if x.strip() == "Caucasian" else 0)
+data['c_charge_degree'] = data['c_charge_degree'].apply(lambda x: 1 if x.strip() == "M" else 0)
 
-categorical_columns = ['age_cat']
+categorical_columns = ['age_cat', 'c_charge_desc']
 
 for column in categorical_columns:
     data = one_hot_encode_column(data, column)
