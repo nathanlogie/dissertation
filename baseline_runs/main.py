@@ -14,14 +14,14 @@ def main():
 
     Each dataset is run with the provided `sensitive_attribute` and `target_column`.
 
-    The results are stored in a Pandas DataFrame and printed to the console.
+    The results are stored in a Pandas DataFrame, printed to the console and converted to a csv.
     """
     datasets = [
-        {"name": "Income Census", "filepath": "../processed_datasets/adult.csv", "sensitive_attribute": "sex",
+        {"name": "Income Census", "filepath": "../datasets/processed_datasets/adult.csv", "sensitive_attribute": "sex",
          "target_column": "income"},
-        {"name": "German Credit", "filepath": "../processed_datasets/german_credit.csv", "sensitive_attribute": "age",
+        {"name": "German Credit", "filepath": "../datasets/processed_datasets/german_credit.csv", "sensitive_attribute": "age",
          "target_column": "credit_risk"},
-        {"name": "Recidivism Compass", "filepath": "../processed_datasets/compass.csv", "sensitive_attribute": "race",
+        {"name": "Recidivism Compass", "filepath": "../datasets/processed_datasets/compass.csv", "sensitive_attribute": "race",
          "target_column": "two_year_recid"}
     ]
 
