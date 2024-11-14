@@ -38,8 +38,8 @@ def main():
         print(dataset["name"] + "-- DONE")
         all_results.append(result)
 
-    # Convert to DataFrame
     results_df = pd.DataFrame(all_results)
+    results_df.to_csv("../results/baseline_results.csv", index=False)
     print(results_df)
 
 if __name__ == "__main__":
