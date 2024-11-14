@@ -1,35 +1,44 @@
 import pandas as pd
 from datasets.dataset_processing.helper_functions import one_hot_encode_column
 
-column_names = [
-    "status", "duration", "credit_history", "purpose", "credit_amount", "savings",
-    "employment", "installment_rate", "personal_status_sex", "other_debtors",
-    "residence_since", "property", "age", "other_installment_plans", "housing",
-    "existing_credits", "job", "num_dependents", "telephone", "foreign_worker", "credit_risk"
-]
 
-data = pd.read_csv("../../raw_datasets/German_Credit/german.data", header=None, names=column_names, sep=" ")
+def german_credit_to_csv(create_csv: bool = True) -> pd.DataFrame:
+    column_names = [
+        "status", "duration", "credit_history", "purpose", "credit_amount", "savings",
+        "employment", "installment_rate", "personal_status_sex", "other_debtors",
+        "residence_since", "property", "age", "other_installment_plans", "housing",
+        "existing_credits", "job", "num_dependents", "telephone", "foreign_worker", "credit_risk"
+    ]
 
-data.dropna(inplace=True)
+    data = pd.read_csv("../../raw_datasets/German_Credit/german.data", header=None, names=column_names, sep=" ")
 
-# credit_risk: 1 for Good Credit Risk, 0 for Bad Credit Risk
-data['credit_risk'] = data['credit_risk'].apply(lambda x: 1 if x == 1 else 0)  # Target value
+    data.dropna(inplace=True)
 
-# 2 protected attributes sex and age
-# 1 for privileged group and 0 for unprivileged group
-data['sex'] = data['personal_status_sex'].apply(lambda x: 1 if x.strip() in ['A91', 'A93', 'A94'] else 0)
-data.drop("personal_status_sex", axis=1, inplace=True)
-data['age'] = data['age'].apply(lambda x: 1 if x>25 else 0)
+    # credit_risk: 1 for Good Credit Risk, 0 for Bad Credit Risk
+    data['credit_risk'] = data['credit_risk'].apply(lambda x: 1 if x == 1 else 0)  # Target value
 
-categorical_columns = [
-    'status', 'credit_history', 'purpose', 'savings', 'employment',
-    'other_debtors', 'property', 'other_installment_plans', 'housing', 'job',
-    'telephone', 'foreign_worker'
-]
+    # 2 protected attributes sex and age
+    # 1 for privileged group and 0 for unprivileged group
+    data['sex'] = data['personal_status_sex'].apply(lambda x: 1 if x.strip() in ['A91', 'A93', 'A94'] else 0)
+    data.drop("personal_status_sex", axis=1, inplace=True)
+    data['age'] = data['age'].apply(lambda x: 1 if x > 25 else 0)
 
-for column in categorical_columns:
-    data = one_hot_encode_column(data, column)
+    categorical_columns = [
+        'status', 'credit_history', 'purpose', 'savings', 'employment',
+        'other_debtors', 'property', 'other_installment_plans', 'housing', 'job',
+        'telephone', 'foreign_worker'
+    ]
 
-clean_csv_filename = "../../processed_datasets/german_credit.csv"
-data.to_csv(clean_csv_filename, index=False)
-print("Cleaned CSV created")
+    for column in categorical_columns:
+        data = one_hot_encode_column(data, column)
+
+    if create_csv:
+        clean_csv_filename = "../../processed_datasets/german_credit.csv"
+        data.to_csv(clean_csv_filename, index=False)
+        print("Cleaned CSV created")
+
+    return data
+
+
+if __name__ == "__main__":
+    german_credit_to_csv()
