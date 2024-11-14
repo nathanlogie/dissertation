@@ -1,5 +1,5 @@
 import pandas as pd
-from dataset_processing.helper_functions import one_hot_encode_column
+from datasets.dataset_processing.helper_functions import one_hot_encode_column
 
 column_names = [
     "status", "duration", "credit_history", "purpose", "credit_amount", "savings",

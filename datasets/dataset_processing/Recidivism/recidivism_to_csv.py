@@ -1,5 +1,5 @@
 import pandas as pd
-from dataset_processing.helper_functions import one_hot_encode_column
+from datasets.dataset_processing.helper_functions import one_hot_encode_column
 
 # Reading the dataset
 data = pd.read_csv("../../raw_datasets/Recidivism/compas-scores-two-years.csv",

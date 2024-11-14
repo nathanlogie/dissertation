@@ -1,5 +1,5 @@
 import pandas as pd
-from dataset_processing.helper_functions import one_hot_encode_column
+from datasets.dataset_processing.helper_functions import one_hot_encode_column
 
 # Headers as of the raw_datasets.names file
 # age,workclass, fnlwgt, education, education-num, marital-status:, occupation, relationship, race, sex, capital-gain,
