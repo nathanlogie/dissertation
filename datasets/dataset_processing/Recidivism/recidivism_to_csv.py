@@ -12,7 +12,8 @@ def recidivism_to_csv(create_csv: bool = True) -> pd.DataFrame:
                  'priors_count', 'c_charge_degree', 'c_charge_desc',
                  'two_year_recid']]
 
-    # Target value is already in binary
+    # Target value is already in binary but has to be flipped as a positive prediction is a negative outcome
+    data['two_year_recid'] = data['two_year_recid'].apply(lambda x: 1 if x == 0 else 0)
     data['sex'] = data['sex'].apply(lambda x: 1 if x.strip() == 'Female' else 0)
     data['race'] = data['race'].apply(lambda x: 1 if x.strip() == "Caucasian" else 0)
     data['c_charge_degree'] = data['c_charge_degree'].apply(lambda x: 1 if x.strip() == "M" else 0)
