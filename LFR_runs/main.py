@@ -8,7 +8,6 @@ def lfr_main(datasets : list[dict]) -> pd.DataFrame:
     all_results = []
 
     for dataset in datasets:
-        print(f"Running LFR on {dataset['name']}")
         result = run_with_lfr(
             filepath=dataset["filepath"],
             sensitive_attribute=dataset["sensitive_attribute"],
