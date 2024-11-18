@@ -19,7 +19,7 @@ def dsp_main(datasets : list[dict]) -> pd.DataFrame:
 
     results_df = pd.DataFrame(all_results)
     results_df["Run Type"] = "DSP"
-    results_df = results_df[["Run Type","Dataset"] + [col for col in results_df.columns if col != "Dataset"]]
+    results_df = results_df[["Run Type","Dataset"] + [col for col in results_df.columns if col not in ["Run Type", "Dataset"]]]
     results_df.to_csv("individual_results/dsp_results.csv", index=False)
     return results_df
 
