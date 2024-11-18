@@ -4,6 +4,7 @@ from LFR_runs.main import lfr_main
 from baseline_runs.main import baseline_main
 from dsp_runs.main import dsp_main
 
+
 def main():
     datasets = [
         {"name": "Income Census", "filepath": "datasets/processed_datasets/adult.csv",
@@ -36,7 +37,8 @@ def main():
                 "Disparate Impact": ["--"],
                 "Statistical Parity Difference": ["--"],
                 "PPV Parity": ["--"],
-                "FPR Parity": ["--"]
+                "FPR Parity": ["--"],
+                "Run Type": "LFR"
             })
             result_df = pd.concat([result_df, placeholder_row], ignore_index=True)
         else:
@@ -48,6 +50,7 @@ def main():
 
     print(combined_results_df)
     combined_results_df.to_csv("combined_results.csv", index=False)
+
 
 if __name__ == "__main__":
     main()

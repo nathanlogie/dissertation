@@ -3,8 +3,7 @@ import pandas as pd
 from LFR_runs.lfr import run_with_lfr
 
 
-def lfr_main(datasets : list[dict]) -> pd.DataFrame:
-
+def lfr_main(datasets: list[dict]) -> pd.DataFrame:
     all_results = []
 
     for dataset in datasets:
@@ -18,12 +17,14 @@ def lfr_main(datasets : list[dict]) -> pd.DataFrame:
 
     results_df = pd.DataFrame(all_results)
     results_df["Run Type"] = "LFR"
-    results_df = results_df[["Run Type","Dataset"] + [col for col in results_df.columns if col not in ["Run Type", "Dataset"]]]
-    results_df.to_csv("individual_results/dsp_results.csv", index=False)
+    results_df = results_df[
+        ["Run Type", "Dataset"] + [col for col in results_df.columns if col not in ["Run Type", "Dataset"]]]
+    results_df.to_csv("individual_results/lfr_results.csv", index=False)
     return results_df
 
+
 if __name__ == "__main__":
-    lfr_main(datasets = [
+    lfr_main(datasets=[
         {"name": "Income Census", "filepath": "../datasets/processed_datasets/adult.csv",
          "sensitive_attribute": "sex",
          "target_column": "income"},
