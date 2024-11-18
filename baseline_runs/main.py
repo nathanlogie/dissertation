@@ -39,6 +39,7 @@ def main():
         all_results.append(result)
 
     results_df = pd.DataFrame(all_results)
+    results_df = results_df[["Dataset"] + [col for col in results_df.columns if col != "Dataset"]]
     results_df.to_csv("../results/baseline_results.csv", index=False)
     print(results_df)
 
