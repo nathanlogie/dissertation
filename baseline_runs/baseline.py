@@ -35,7 +35,9 @@ def run_baseline(filepath: str, sensitive_attribute: str, target_column: str, mo
 
     y = df[target_column]
     X = df.drop(columns=[target_column])
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.3, random_state=42, stratify=y
+    )
 
     model = make_pipeline(StandardScaler(), model)
     model.fit(X_train, y_train)
