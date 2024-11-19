@@ -1,4 +1,6 @@
 import pandas as pd
+from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier
 
 from LFR_runs.main import lfr_main
 from baseline_runs.main import baseline_main
@@ -18,35 +20,41 @@ def main():
          "target_column": "two_year_recid"}
     ]
 
-    # LFR takes by far the longest to run so if you only wish to see adaptive masking compared to some then comment it out
-    # LFR has issues with collapsing all results to 1 in the case of Recidivism Compass so it isn't run on that dataset
+    models = [
+        ("Logistic Regression", LogisticRegression(solver='liblinear', random_state=1)),
+        ("Random Forest", RandomForestClassifier(random_state=1))
+    ]
 
     main_runs = [baseline_main, dsp_main, lfr_main]
     all_combined_results = []
 
-    for run in main_runs:
-        print(f"Running {run.__name__} on all datasets")
-        if run == lfr_main:
-            result_df = run(datasets[:-1])
-            placeholder_row = pd.DataFrame({
-                "Dataset": ["Recidivism Compass"],
-                "Accuracy": ["--"],
-                "Precision": ["--"],
-                "Recall": ["--"],
-                "F1 Score": ["--"],
-                "Disparate Impact": ["--"],
-                "Statistical Parity Difference": ["--"],
-                "PPV Parity": ["--"],
-                "FPR Parity": ["--"],
-                "Run Type": "LFR"
-            })
-            result_df = pd.concat([result_df, placeholder_row], ignore_index=True)
-        else:
-            result_df = run(datasets)
-        all_combined_results.append(result_df)
+    for model_name, model in models:
+        print(f"Running experiments with {model_name}")
+        for run in main_runs:
+            print(f"Running {run.__name__} on all datasets with {model_name}")
+            if run == lfr_main:
+                result_df = run(datasets[:-1], model)
+                placeholder_row = pd.DataFrame({
+                    "Dataset": ["Recidivism Compass"],
+                    "Accuracy": ["--"],
+                    "Precision": ["--"],
+                    "Recall": ["--"],
+                    "F1 Score": ["--"],
+                    "Disparate Impact": ["--"],
+                    "Statistical Parity Difference": ["--"],
+                    "PPV Parity": ["--"],
+                    "FPR Parity": ["--"],
+                    "Model": model_name,
+                    "Run Type": "LFR"
+                })
+                result_df = pd.concat([result_df, placeholder_row], ignore_index=True)
+            else:
+                result_df = run(datasets, model)
+            result_df["Model"] = model_name
+            all_combined_results.append(result_df)
 
     combined_results_df = pd.concat(all_combined_results, ignore_index=True)
-    combined_results_df.sort_values("Dataset", inplace=True)
+    combined_results_df.sort_values(["Dataset", "Model", "Run Type"], inplace=True)
 
     print(combined_results_df)
     combined_results_df.to_csv("combined_results.csv", index=False)

@@ -1,5 +1,8 @@
+from typing import Union
+
 import pandas as pd
 from aif360.algorithms.preprocessing import LFR
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
@@ -9,7 +12,7 @@ from aif360.metrics import BinaryLabelDatasetMetric, ClassificationMetric
 from aif360.datasets import BinaryLabelDataset
 
 
-def run_with_lfr(filepath: str, sensitive_attribute: str, target_column: str, display_metrics: bool = False) -> dict:
+def run_with_lfr(filepath: str, sensitive_attribute: str, target_column: str,model:Union[LogisticRegression, RandomForestClassifier], display_metrics: bool = False) -> dict:
     df = pd.read_csv(filepath, header=0, skipinitialspace=True)
     df[sensitive_attribute] = LabelEncoder().fit_transform(df[sensitive_attribute])
 
@@ -40,7 +43,7 @@ def run_with_lfr(filepath: str, sensitive_attribute: str, target_column: str, di
     X_test_transformed = test_dataset_transformed.features
     y_test_transformed = test_dataset_transformed.labels.ravel()
 
-    model = make_pipeline(StandardScaler(), LogisticRegression(solver='liblinear', random_state=1))
+    model = make_pipeline(StandardScaler(), model)
     model.fit(X_train_transformed, y_train_transformed)
     y_pred = model.predict(X_test_transformed)
 

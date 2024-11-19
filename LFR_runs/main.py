@@ -1,16 +1,21 @@
+from typing import Union
+
 import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
 
 from LFR_runs.lfr import run_with_lfr
 
 
-def lfr_main(datasets: list[dict]) -> pd.DataFrame:
+def lfr_main(datasets: list[dict], model:Union[LogisticRegression, RandomForestClassifier]) -> pd.DataFrame:
     all_results = []
 
     for dataset in datasets:
         result = run_with_lfr(
             filepath=dataset["filepath"],
             sensitive_attribute=dataset["sensitive_attribute"],
-            target_column=dataset["target_column"]
+            target_column=dataset["target_column"],
+            model=model
         )
         result["Dataset"] = dataset["name"]
         all_results.append(result)

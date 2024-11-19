@@ -2,7 +2,7 @@ import pandas as pd
 
 from baseline_runs.baseline import run_baseline
 
-def baseline_main(datasets : list[dict]) -> pd.DataFrame:
+def baseline_main(datasets : list[dict], model) -> pd.DataFrame:
     """
     Runs baseline experiments on three datasets and prints individual_results.
 
@@ -23,7 +23,8 @@ def baseline_main(datasets : list[dict]) -> pd.DataFrame:
         result = run_baseline(
             filepath=dataset["filepath"],
             sensitive_attribute=dataset["sensitive_attribute"],
-            target_column=dataset["target_column"]
+            target_column=dataset["target_column"],
+            model=model
         )
         result["Dataset"] = dataset["name"]
         all_results.append(result)

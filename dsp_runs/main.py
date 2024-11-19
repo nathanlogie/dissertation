@@ -1,10 +1,13 @@
-import pandas as pd
+from typing import Union
 
-from baseline_runs.baseline import run_baseline
+import pandas as pd
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
+
 from dsp_runs.dsp import run_dsp
 
 
-def dsp_main(datasets : list[dict]) -> pd.DataFrame:
+def dsp_main(datasets : list[dict],model:Union[LogisticRegression, RandomForestClassifier]) -> pd.DataFrame:
 
     all_results = []
 
@@ -12,7 +15,8 @@ def dsp_main(datasets : list[dict]) -> pd.DataFrame:
         result = run_dsp(
             filepath=dataset["filepath"],
             sensitive_attribute=dataset["sensitive_attribute"],
-            target_column=dataset["target_column"]
+            target_column=dataset["target_column"],
+            model=model
         )
         result["Dataset"] = dataset["name"]
         all_results.append(result)
