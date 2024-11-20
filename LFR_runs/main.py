@@ -24,7 +24,8 @@ def lfr_main(datasets: list[dict], model:Union[LogisticRegression, RandomForestC
     results_df["Run Type"] = "LFR"
     results_df = results_df[
         ["Run Type", "Dataset"] + [col for col in results_df.columns if col not in ["Run Type", "Dataset"]]]
-    results_df.to_csv("individual_results/lfr_results.csv", index=False)
+    model_name = model.__class__.__name__
+    results_df.to_csv(f"individual_results/lfr_results_{model_name}.csv", index=False)
     return results_df
 
 
