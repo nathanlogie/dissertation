@@ -8,7 +8,7 @@ from sklearn.linear_model import LogisticRegression
 
 class AdaptiveMasking:
 
-    def __init__(self, model:Union[LogisticRegression, RandomForestClassifier], bias_metric:Callable, threshold:int, mask:int=0):
+    def __init__(self, model:Union[LogisticRegression, RandomForestClassifier], bias_metric:Callable, threshold:int, mask:int=0) -> None:
         self.model = model
         self.bias_metric = bias_metric
         self.threshold = threshold
