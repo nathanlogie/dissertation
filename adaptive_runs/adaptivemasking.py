@@ -8,7 +8,7 @@ from sklearn.linear_model import LogisticRegression
 
 class AdaptiveMasking:
 
-    def __init__(self, model:Union[LogisticRegression, RandomForestClassifier], bias_metric:Callable, threshold:float,sensitive_attribute:str, mask:int=0) -> None:
+    def __init__(self, model:Union[LogisticRegression, RandomForestClassifier], bias_metric:Callable, threshold:float,sensitive_attribute:str, mask:int=-1) -> None:
         self.model = model
         self.bias_metric = bias_metric
         self.threshold = threshold
@@ -26,27 +26,22 @@ class AdaptiveMasking:
 
     def train(self, x_train: Union[np.ndarray, pd.DataFrame], y_train: Union[np.ndarray, pd.Series],
               sensitive_attribute) -> None:
-        sensitive_attribute = np.array(sensitive_attribute)  # Ensure array-like
+        sensitive_attribute = np.array(sensitive_attribute)
 
-        for epoch in range(1, 6):
+        for epoch in range(1, 15):
             print(f"Epoch {epoch}")
 
-            # Check if masking is needed
             if self.is_masking:
                 x_train[self.sensitive_attribute] = self.mask
                 print(f"Epoch {epoch}: Sensitive attribute masked.")
 
-            # Fit the model
             self.model.fit(x_train, y_train)
 
-            # Predict on the training data
             y_pred = self.model.predict(x_train)
 
-            # Bias calculation
             bias_score = self.bias_metric(y_train, y_pred, sensitive_attribute)
             print(f"Epoch {epoch}: Bias Score = {bias_score}")
 
-            # Determine if masking should be applied
             if bias_score > self.threshold:
                 self.is_masking = True
             else:
@@ -54,8 +49,6 @@ class AdaptiveMasking:
 
             if self.is_masking:
                 x_train[self.sensitive_attribute] = self.mask
-                y_pred_masked = self.model.predict(x_train)
-                print(f"Epoch {epoch}: Predictions after masking: {y_pred_masked}")
 
     def masking(self, x_data: Union[np.ndarray, pd.DataFrame]) -> Union[np.ndarray, pd.DataFrame]:
 

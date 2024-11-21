@@ -1,5 +1,4 @@
 from typing import Union
-
 import numpy as np
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
@@ -10,30 +9,28 @@ from aif360.metrics import BinaryLabelDatasetMetric, ClassificationMetric
 from aif360.datasets import BinaryLabelDataset
 
 from adaptive_runs.adaptivemasking import AdaptiveMasking
+from adaptive_runs.training_loop import adaptive_training_loop
 
 
 def run_adaptive(filepath: str, sensitive_attribute: str, target_column: str,
                  model: Union[LogisticRegression, RandomForestClassifier],
                  display_metrics: bool = False) -> dict:
-    # Load and preprocess the dataset
+
     df = pd.read_csv(filepath, header=0, skipinitialspace=True)
     target = df[target_column]
     sensitive_attr_values = df[sensitive_attribute]
 
-    # Encode categorical sensitive attributes
     sensitive_attr_values = LabelEncoder().fit_transform(sensitive_attr_values)
     df[sensitive_attribute] = sensitive_attr_values
 
-    # Separate features and labels
     X = df.drop(columns=[target_column])
     y = target
 
-    # Define a bias metric (example)
-    def example_bias_metric(y_true, y_pred, sensitive_attr):
-        # Dummy implementation of a bias metric
-        return np.abs(y_pred[sensitive_attr == 1].mean() - y_pred[sensitive_attr == 0].mean())
+    def example_bias_metric(y_true: np.ndarray, y_pred: np.ndarray, sensitive_attr: np.ndarray) -> float:
+        group_0_mean = y_pred[sensitive_attr == 0].mean()
+        group_1_mean = y_pred[sensitive_attr == 1].mean()
+        return abs(group_0_mean - group_1_mean)
 
-    # Instantiate AdaptiveMasking
     adaptive_model = AdaptiveMasking(
         model=model,
         bias_metric=example_bias_metric,
@@ -41,11 +38,10 @@ def run_adaptive(filepath: str, sensitive_attribute: str, target_column: str,
         sensitive_attribute=sensitive_attribute
     )
 
-    # Train and test the model
-    adaptive_model.train(X, y, sensitive_attr_values)
+    adaptive_training_loop(X, y, sensitive_attr=sensitive_attribute, adaptive_model=adaptive_model)
 
     y_pred = adaptive_model.predict(X)
-    df[target_name] = y_pred
+    df[target_column] = y_pred
 
     accuracy = accuracy_score(y, y_pred)
     precision = precision_score(y, y_pred, zero_division=0)
@@ -60,14 +56,21 @@ def run_adaptive(filepath: str, sensitive_attribute: str, target_column: str,
         protected_attribute_names=[sensitive_attribute]
     )
 
-    metrics = BinaryLabelDatasetMetric(aif_data, privileged_groups=[{sensitive_attribute: 1}],
-                                       unprivileged_groups=[{sensitive_attribute: 0}])
+    dataset_metrics = BinaryLabelDatasetMetric(
+        aif_data,
+        privileged_groups=[{sensitive_attribute: 1}],
+        unprivileged_groups=[{sensitive_attribute: 0}]
+    )
 
-    disparate_impact = metrics.ratio(metrics.base_rate)
-    statistical_parity_diff = metrics.statistical_parity_difference()
+    disparate_impact = dataset_metrics.disparate_impact()
+    statistical_parity_diff = dataset_metrics.statistical_parity_difference()
 
-    classification_metrics = ClassificationMetric(aif_data, aif_data, privileged_groups=[{sensitive_attribute: 1}],
-                                                  unprivileged_groups=[{sensitive_attribute: 0}])
+    classification_metrics = ClassificationMetric(
+        aif_data,
+        aif_data,
+        privileged_groups=[{sensitive_attribute: 1}],
+        unprivileged_groups=[{sensitive_attribute: 0}]
+    )
 
     ppv_privileged = classification_metrics.positive_predictive_value(privileged=True)
     ppv_unprivileged = classification_metrics.positive_predictive_value(privileged=False)
@@ -88,6 +91,7 @@ def run_adaptive(filepath: str, sensitive_attribute: str, target_column: str,
         print(f"PPV Parity: {ppv_parity}")
         print(f"FPR Parity: {fpr_parity}")
 
+    # Return results as a dictionary
     results = {
         "Accuracy": accuracy,
         "Precision": precision,
@@ -101,9 +105,12 @@ def run_adaptive(filepath: str, sensitive_attribute: str, target_column: str,
 
     return results
 
+
 if __name__ == "__main__":
-    run_adaptive(filepath="../datasets/processed_datasets/german_credit.csv",
-                 sensitive_attribute="age",
-                 target_column="credit_risk",
-                 model=LogisticRegression(solver='liblinear', random_state=1),
-                 display_metrics=True)
+    run_adaptive(
+        filepath="../datasets/processed_datasets/german_credit.csv",
+        sensitive_attribute="age",
+        target_column="credit_risk",
+        model=LogisticRegression(solver='liblinear', random_state=1),
+        display_metrics=True
+    )
