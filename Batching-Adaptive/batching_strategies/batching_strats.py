@@ -122,3 +122,5 @@ def batch_by_similarity(data, target, sensitive_attribute, epochs) -> list:
     sorted_batches = [b[0] for b in sorted(similarities, key=lambda x: x[1], reverse=True)]
 
     return sorted_batches
+
+batching_strats = [batch_equal_sensitive, batch_demographic_parity, batch_by_correlation, batch_by_similarity]
