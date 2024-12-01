@@ -5,6 +5,7 @@ from sklearn.ensemble import RandomForestClassifier
 from LFR_runs.main import lfr_main
 from baseline_runs.main import baseline_main
 from dsp_runs.main import dsp_main
+from sensitive_removed_runs.main import sens_removed_main
 
 
 def main():
@@ -25,7 +26,7 @@ def main():
         ("Random Forest", RandomForestClassifier(random_state=1))
     ]
 
-    main_runs = [baseline_main, dsp_main, lfr_main]
+    main_runs = [baseline_main, dsp_main, sens_removed_main]
     all_combined_results = []
 
     for model_name, model in models:
