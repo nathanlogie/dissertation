@@ -4,12 +4,13 @@ from scipy.stats import pearsonr
 from sklearn.metrics import pairwise_distances
 
 
-def batch_equal_sensitive(training_data, sensitive_attribute, epochs) -> list:
+def batch_equal_sensitive(training_data, target, sensitive_attribute, epochs) -> list:
     """
         Batches the training data into batches with an equal proportion of sensitive and non-sensitive examples.
 
         Parameters:
         - training_data (pandas.DataFrame): The training data to be batched.
+        - target (str): The column name of the target variable in the dataset. (unused in this function)
         - sensitive_attribute (str): The column name of the sensitive attribute in the dataset.
         - epochs (int): The number of batches to create.
 
@@ -84,13 +85,13 @@ def batch_by_correlation(training_data, target, sensitive_attribute, epochs) -> 
     return sorted_batches
 
 
-def batch_by_similarity(data, sensitive, features, n_batches) -> list:
+def batch_by_similarity(data, target, sensitive_attribute, epochs) -> list:
     """
        Batches the training data into batches ordered by how similar the sensitive attribute distributions are
 
        Parameters:
        - training_data (pandas.DataFrame): The training data to be batched.
-       - target (str): The column name of the target variable in the dataset.
+       - target (str): The column name of the target variable in the dataset. (unused in this function)
        - sensitive_attribute (str): The column name of the sensitive attribute in the dataset.
        - epochs (int): The number of batches to create.
 
@@ -100,13 +101,24 @@ def batch_by_similarity(data, sensitive, features, n_batches) -> list:
    """
 
     def compute_similarity(batch):
-        priv_group = batch[batch[sensitive] == 1][features]
-        unpriv_group = batch[batch[sensitive] == 0][features]
+        features = [col for col in data.columns if col not in {target, sensitive_attribute}]
+
+        priv_group = batch[batch[sensitive_attribute] == 1][features]
+        unpriv_group = batch[batch[sensitive_attribute] == 0][features]
+
+        if priv_group.empty or unpriv_group.empty:
+            return float('-inf')
+
         return -pairwise_distances(priv_group.mean().values.reshape(1, -1),
                                    unpriv_group.mean().values.reshape(1, -1),
                                    metric='euclidean')[0, 0]
 
-    batches = np.array_split(data, n_batches)
+
+    batches = [data.iloc[batch_start:batch_end] for batch_start, batch_end in
+               zip(range(0, len(data), len(data) // epochs),
+                   range(len(data) // epochs, len(data) + len(data) // epochs, len(data) // epochs))]
+
     similarities = [(batch, compute_similarity(batch)) for batch in batches]
     sorted_batches = [b[0] for b in sorted(similarities, key=lambda x: x[1], reverse=True)]
+
     return sorted_batches
