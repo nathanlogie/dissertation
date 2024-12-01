@@ -29,7 +29,8 @@ def batch_equal_sensitive(training_data, sensitive_attribute, epochs) -> list:
                 batches[i] = pd.concat([batches[i], split_batches[i]])
     return batches
 
-def batch_demographic_parity(training_data, target, sensitive_attribute, epochs):
+
+def batch_demographic_parity(training_data, target, sensitive_attribute, epochs) -> list:
     """
           Batches the training data into batches that all meet the demographic parity 4/5 ratio criterion.
 
@@ -58,18 +59,19 @@ def batch_demographic_parity(training_data, target, sensitive_attribute, epochs)
             batches.append(subset)
     return batches
 
-def batch_by_correlation(training_data, target, sensitive_attribute, epochs):
+
+def batch_by_correlation(training_data, target, sensitive_attribute, epochs) -> list:
     """
-         Batches the training data into batches ordered by how closely correlated the sensitive attribute is to the target variable.
+     Batches the training data into batches ordered by how closely correlated the sensitive attribute is to the target variable.
 
-         Parameters:
-         - training_data (pandas.DataFrame): The training data to be batched.
-         - target (str): The column name of the target variable in the dataset.
-         - sensitive_attribute (str): The column name of the sensitive attribute in the dataset.
-         - epochs (int): The number of batches to create.
+     Parameters:
+     - training_data (pandas.DataFrame): The training data to be batched.
+     - target (str): The column name of the target variable in the dataset.
+     - sensitive_attribute (str): The column name of the sensitive attribute in the dataset.
+     - epochs (int): The number of batches to create.
 
-         Returns:
-         - list: A list of batches, ordered by correlation between the sensitive attribute and the target variable.
+     Returns:
+     - list: A list of batches, ordered by correlation between the sensitive attribute and the target variable.
 
      """
 
@@ -82,8 +84,7 @@ def batch_by_correlation(training_data, target, sensitive_attribute, epochs):
     return sorted_batches
 
 
-
-def batch_by_similarity(data, sensitive, features, n_batches):
+def batch_by_similarity(data, sensitive, features, n_batches) -> list:
     """
        Batches the training data into batches ordered by how similar the sensitive attribute distributions are
 
