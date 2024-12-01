@@ -7,18 +7,18 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 
 
-class AdaptiveMasking:
+class AdaptiveBaseline:
 
     def __init__(self, model: Union[LogisticRegression, RandomForestClassifier], bias_metric: Callable,
                  threshold: float, sensitive_attribute: str, batching: Callable[[pd.DataFrame, str, str, int], list],
-                 retrain_full: bool = False, mask: int = -1) -> None:
+                 mask: int = 0) -> None:
+
         self.model = model
         self.bias_metric = bias_metric
         self.threshold = threshold
         self.mask = mask
         self.sensitive_attribute = sensitive_attribute
         self.is_masking = False
-        self.retrain_full = retrain_full
         self.batching = batching
 
     def predict(self, x_test: Union[np.ndarray, pd.DataFrame]) -> np.ndarray:
