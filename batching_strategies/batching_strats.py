@@ -114,9 +114,7 @@ def batch_by_similarity(data, target, sensitive_attribute, epochs) -> list:
                                    metric='euclidean')[0, 0]
 
 
-    batches = [data.iloc[batch_start:batch_end] for batch_start, batch_end in
-               zip(range(0, len(data), len(data) // epochs),
-                   range(len(data) // epochs, len(data) + len(data) // epochs, len(data) // epochs))]
+    batches = np.array_split(data, epochs)
 
     similarities = [(batch, compute_similarity(batch)) for batch in batches]
     sorted_batches = [b[0] for b in sorted(similarities, key=lambda x: x[1], reverse=True)]
