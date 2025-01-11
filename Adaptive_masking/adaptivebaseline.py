@@ -101,7 +101,6 @@ class AdaptiveBaseline:
             # Adaptively decide masking for the next batch
             self.is_masking = val_bias_score > self.threshold
 
-        # Plot bias scores
         plt.figure(figsize=(10, 5))
         plt.plot(train_sizes, val_bias_scores, label='Validation Bias Score')
         plt.plot(train_sizes, test_bias_scores, label='Test Bias Score')
@@ -112,11 +111,9 @@ class AdaptiveBaseline:
         plt.show()
 
     def masking(self, x_data: Union[np.ndarray, pd.DataFrame]) -> Union[np.ndarray, pd.DataFrame]:
-        if isinstance(x_data, pd.DataFrame):
-            x_data[self.sensitive_attribute] = self.mask
-        else:
-            raise ValueError("Unsupported data type for x_data. Use pandas DataFrame.")
-        return x_data
+        x_data_masked = x_data.copy()
+        x_data_masked[self.sensitive_attribute] = self.mask
+        return x_data_masked
 
     def main(self, filepath: str, sensitive_attribute: str, target_column: str,
              display_metrics: bool = False) -> dict:

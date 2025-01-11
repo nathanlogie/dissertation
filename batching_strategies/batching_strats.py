@@ -123,4 +123,7 @@ def batch_by_similarity(data, target, sensitive_attribute, epochs) -> list:
 
     return sorted_batches
 
-batching_strats = [batch_equal_sensitive, batch_demographic_parity, batch_by_correlation, batch_by_similarity]
+def no_batching(training_data, target, sensitive_attribute, epochs):
+    return np.array_split(training_data, epochs)
+
+batching_strats = [batch_equal_sensitive, batch_demographic_parity, batch_by_correlation, batch_by_similarity, no_batching]
