@@ -104,11 +104,11 @@ class AdaptiveBaseline:
             self.is_masking = val_bias_score > self.threshold
 
         plt.figure(figsize=(10, 5))
-        plt.plot(train_sizes, val_bias_scores, label=f'Validation set Bias Score for batching strategy {self.batching}')
-        plt.plot(train_sizes, test_bias_scores, label=f'Test set Bias Score for batching strategy {self.batching}')
+        plt.plot(train_sizes, val_bias_scores, label=f'Validation set Bias Score')
+        plt.plot(train_sizes, test_bias_scores, label=f'Test set Bias Score')
         plt.xlabel('Number of Items in Training Set')
         plt.ylabel('Bias Score')
-        plt.title('Bias Score vs. Training Set Size')
+        plt.title(f'Bias Score against {self.sensitive_attribute} vs. Training Set Size with {self.batching.__name__}')
         plt.legend()
         plt.show()
 

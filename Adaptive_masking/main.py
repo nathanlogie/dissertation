@@ -21,7 +21,8 @@ def main():
                 bias_metric=example_bias_metric,
                 threshold=0.1,
                 sensitive_attribute=dataset[1],
-                batching=batching_strategy
+                batching=batching_strategy,
+                batch_number=30
             )
 
             currAdaptive.main(
