@@ -1,5 +1,7 @@
 import pandas as pd
+from matplotlib import pyplot as plt
 from sklearn.linear_model import LogisticRegression
+from sympy.plotting import plot3d
 
 from Adaptive_masking.adaptivebaseline import AdaptiveBaseline
 from Adaptive_masking.bias_metrics import example_bias_metric
@@ -44,8 +46,39 @@ def main():
         ["Batching Strategy", "Batches"] + [col for col in results_df.columns if col not in ["Batching Strategy", "Batches"]]]
     results_df.sort_values(["Batching Strategy", "Batches"], inplace=True)
     results_df.to_csv("batching_results.csv", index=False)
-
+    plot(results_df)
     return results_df
+
+def plot(results_df):
+    batching_strategies = results_df['Batching Strategy'].unique()
+
+    for batching_strategy in batching_strategies:
+        plt.figure(figsize=(10, 6))
+
+        strategy_data = results_df[results_df['Batching Strategy'] == batching_strategy]
+
+        accuracy_data = strategy_data[['Batches', 'Accuracy']]
+        accuracy_data = accuracy_data.groupby('Batches').mean()
+        plt.plot(accuracy_data.index, accuracy_data['Accuracy'], label='Accuracy', color='blue', marker='o')
+
+        FPR_data = strategy_data[['Batches', 'FPR Parity']]
+        FPR_data = FPR_data.groupby('Batches').mean()
+        plt.plot(FPR_data.index, FPR_data['FPR Parity'], label='FPR Parity',
+                 color='red', marker='x')
+
+        PPV_data = strategy_data[['Batches', 'PPV Parity']]
+        PPV_data = PPV_data.groupby('Batches').mean()
+        plt.plot(PPV_data.index, PPV_data['PPV Parity'], label='PPV Parity',
+                 color='red', marker='x')
+
+        plt.title(f'Accuracy and Disparate Impact vs Number of Batches ({batching_strategy})')
+        plt.xlabel('Number of Batches')
+        plt.ylabel('Value')
+        plt.legend()
+
+        # Show plot
+        plt.grid(True)
+        plt.show()
 
 if __name__ == "__main__":
     main()
