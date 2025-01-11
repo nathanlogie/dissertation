@@ -1,4 +1,4 @@
-from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier
 
 from Adaptive_masking.adaptivebaseline import AdaptiveBaseline
 from Adaptive_masking.bias_metrics import example_bias_metric
@@ -15,11 +15,12 @@ def main():
     for dataset in processed_datasets:
         for batching_strategy in batching_strats:
             print(dataset[0], batching_strategy.__name__)
+
             currAdaptive = AdaptiveBaseline(
-                model=LogisticRegression(),
+                model=RandomForestClassifier(),
                 bias_metric=example_bias_metric,
                 threshold=0.1,
-                sensitive_attribute="sex",
+                sensitive_attribute=dataset[1],
                 batching=batching_strategy
             )
 

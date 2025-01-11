@@ -7,16 +7,18 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import LabelEncoder
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import LabelEncoder, StandardScaler
 import matplotlib.pyplot as plt
+
 
 class AdaptiveBaseline:
 
     def __init__(self, model: Union[LogisticRegression, RandomForestClassifier], bias_metric: Callable,
                  threshold: float, sensitive_attribute: str, batching: Callable[[pd.DataFrame, str, str, int], list],
-                 mask: int = 0, batch_number: int=10) -> None:
+                 mask: int = 0, batch_number: int = 10) -> None:
 
-        self.model = model
+        self.model = make_pipeline(StandardScaler(), model)
         self.bias_metric = bias_metric
         self.threshold = threshold
         self.mask = mask
@@ -30,18 +32,13 @@ class AdaptiveBaseline:
 
     def evaluate_bias(self, y_true: Union[np.ndarray, pd.Series],
                       y_pred: np.ndarray) -> float:
-        """
-        Evaluate bias using the provided bias metric.
-        """
+
         return self.bias_metric(y_true, y_pred, self.sensitive_attribute)
 
     def train(self, x_train: Union[np.ndarray, pd.DataFrame],
               y_train: Union[np.ndarray, pd.Series],
               x_val: pd.DataFrame, y_val: pd.Series, x_test: pd.DataFrame, y_test: pd.Series) -> None:
-        """
-        Train the model using batched training data and adapt masking based on bias evaluation.
-        Track bias scores for both validation and test sets.
-        """
+
         if isinstance(x_train, np.ndarray):
             x_train = pd.DataFrame(x_train)
         if isinstance(y_train, np.ndarray):
@@ -59,8 +56,16 @@ class AdaptiveBaseline:
         for batch_idx, batch in enumerate(batches):
             print(f"Batch {batch_idx + 1}/{len(batches)}")
 
+
             x_batch = batch.drop(columns=target_name)
             y_batch = batch[target_name]
+
+            print(f"Batch {batch_idx + 1} size: {len(x_batch)}")
+            print(f"Sensitive attribute distribution:\n{x_batch[self.sensitive_attribute].value_counts()}")
+
+            if x_batch.empty:
+                print(f"Skipping empty batch {batch_idx + 1}")
+                continue
 
             # Apply masking if necessary
             if self.is_masking:
@@ -76,6 +81,11 @@ class AdaptiveBaseline:
             # Evaluate bias on the validation set
             y_pred_val = self.model.predict(x_val)
             val_bias_score = self.evaluate_bias(y_val, y_pred_val)
+
+            if np.isnan(val_bias_score):
+                print(f"Skipping Batch {batch_idx + 1} due to NaN bias score")
+                continue
+
             val_bias_scores.append(val_bias_score)
 
             # Evaluate bias on the test set
@@ -136,7 +146,7 @@ class AdaptiveBaseline:
                                                      unprivileged_groups=[{sensitive_attribute: 0}])
 
         accuracy = accuracy_score(y_test, y_pred)
-        precision = precision_score(y_test, y_pred)
+        precision = precision_score(y_test, y_pred, zero_division=1)
         recall = recall_score(y_test, y_pred)
         f1 = f1_score(y_test, y_pred)
 
