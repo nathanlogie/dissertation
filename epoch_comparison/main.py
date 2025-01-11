@@ -4,9 +4,11 @@ from sklearn.linear_model import LogisticRegression
 from Adaptive_masking.adaptivebaseline import AdaptiveBaseline
 from Adaptive_masking.bias_metrics import example_bias_metric
 from batching_strategies.batching_strats import batching_strats
-
+import warnings
 
 def main():
+    warnings.simplefilter(action='ignore', category=FutureWarning)
+
     adjusted_datasets = [
         {"name": "Income Census", "filepath": "../datasets/processed_datasets/adult.csv",
          "sensitive_attribute": "sex",
@@ -15,7 +17,7 @@ def main():
 
     all_results = []
     for batching_strategy in batching_strats:
-        for i in range(3,60,3):
+        for i in range(5,105,5):
             print(i, batching_strategy.__name__)
             currAdaptive = AdaptiveBaseline(
                 model=LogisticRegression(solver='liblinear', random_state=1),
