@@ -107,3 +107,8 @@ def run_adaptive_baseline(filepath: str, sensitive_attribute: str, target_column
     }
 
     return results
+
+def main():
+    run_adaptive_baseline(
+
+    )

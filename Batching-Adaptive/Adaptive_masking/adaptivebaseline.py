@@ -78,3 +78,5 @@ class AdaptiveBaseline:
             raise ValueError("Unsupported data type for x_data. Use pandas DataFrame or numpy array.")
 
         return x_data
+
+
