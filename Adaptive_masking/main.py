@@ -6,9 +6,9 @@ from batching_strats import batching_strats
 
 def main():
     processed_datasets = [
-        ("../../processed_datasets/adult.csv", "sex", "income"),
-        ("../../processed_datasets/german_credit.csv", "age", "credit_risk"),
-        ("../../processed_datasets/compass.csv", "race", "two_year_recid")
+        ("../datasets/processed_datasets/adult.csv", "sex", "income"),
+        ("../datasets/processed_datasets/german_credit.csv", "age", "credit_risk"),
+        ("../datasets/processed_datasets/compass.csv", "race", "two_year_recid")
 
     ]
 
