@@ -42,6 +42,8 @@ class AdaptiveBaseline:
         if isinstance(y_train, np.ndarray):
             y_train = pd.Series(y_train, name='target')
 
+        self.model.fit(x_train, y_train)
+
         combined_training = pd.concat([x_train, y_train], axis=1)
         target_name = y_train.name
 
@@ -58,8 +60,8 @@ class AdaptiveBaseline:
             x_batch = batch.drop(columns=target_name)
             y_batch = batch[target_name]
 
-            print(f"Batch {batch_idx + 1} size: {len(x_batch)}")
-            print(f"Sensitive attribute distribution:\n{x_batch[self.sensitive_attribute].value_counts()}")
+            # print(f"Batch {batch_idx + 1} size: {len(x_batch)}")
+            # print(f"Sensitive attribute distribution:\n{x_batch[self.sensitive_attribute].value_counts()}")
 
             if x_batch.empty:
                 print(f"Skipping empty batch {batch_idx + 1}")
@@ -95,15 +97,15 @@ class AdaptiveBaseline:
             test_bias_score = self.evaluate_bias(y_test, y_pred_test, x_test[self.sensitive_attribute])
             test_bias_scores.append(test_bias_score)
 
-            print(f"Validation Bias Score for Batch {batch_idx + 1}: {val_bias_score}")
-            print(f"Test Bias Score for Batch {batch_idx + 1}: {test_bias_score}")
+            # print(f"Validation Bias Score for Batch {batch_idx + 1}: {val_bias_score}")
+            # print(f"Test Bias Score for Batch {batch_idx + 1}: {test_bias_score}")
 
             # Adaptively decide masking for the next batch
             self.is_masking = val_bias_score > self.threshold
 
         plt.figure(figsize=(10, 5))
-        plt.plot(train_sizes, val_bias_scores, label='Validation Bias Score')
-        plt.plot(train_sizes, test_bias_scores, label='Test Bias Score')
+        plt.plot(train_sizes, val_bias_scores, label=f'Validation set Bias Score for batching strategy {self.batching}')
+        plt.plot(train_sizes, test_bias_scores, label=f'Test set Bias Score for batching strategy {self.batching}')
         plt.xlabel('Number of Items in Training Set')
         plt.ylabel('Bias Score')
         plt.title('Bias Score vs. Training Set Size')
