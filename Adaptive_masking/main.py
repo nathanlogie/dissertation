@@ -1,5 +1,4 @@
 import pandas as pd
-from sklearn.ensemble import RandomForestClassifier
 
 from Adaptive_masking.adaptivebaseline import AdaptiveBaseline
 from Adaptive_masking.bias_metrics import example_bias_metric
@@ -14,7 +13,7 @@ def adaptive_baseline_main(datasets : list[dict], model) -> pd.DataFrame:
                 model=model,
                 bias_metric=example_bias_metric,
                 threshold=0.1,
-                sensitive_attribute=dataset[1],
+                sensitive_attribute=dataset["sensitive_attribute"],
                 batching=batching_strategy,
                 batch_number=15
             )
@@ -26,6 +25,7 @@ def adaptive_baseline_main(datasets : list[dict], model) -> pd.DataFrame:
             )
 
             results["Batching Strategy"] = batching_strategy.__name__
+            results["Dataset"] = dataset["name"]
 
             all_results.append(results)
     results_df = pd.DataFrame(all_results)

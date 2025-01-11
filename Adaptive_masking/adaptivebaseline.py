@@ -35,7 +35,7 @@ class AdaptiveBaseline:
 
     def train(self, x_train: Union[np.ndarray, pd.DataFrame],
               y_train: Union[np.ndarray, pd.Series],
-              x_val: pd.DataFrame, y_val: pd.Series, x_test: pd.DataFrame, y_test: pd.Series) -> None:
+              x_val: pd.DataFrame, y_val: pd.Series, x_test: pd.DataFrame, y_test: pd.Series, show_plots: bool = False) -> None:
 
         if isinstance(x_train, np.ndarray):
             x_train = pd.DataFrame(x_train)
@@ -54,7 +54,7 @@ class AdaptiveBaseline:
         test_bias_scores = []
 
         for batch_idx, batch in enumerate(batches):
-            print(f"Batch {batch_idx + 1}/{len(batches)}")
+            # print(f"Batch {batch_idx + 1}/{len(batches)}")
 
 
             x_batch = batch.drop(columns=target_name)
@@ -103,14 +103,15 @@ class AdaptiveBaseline:
             # Adaptively decide masking for the next batch
             self.is_masking = val_bias_score > self.threshold
 
-        plt.figure(figsize=(10, 5))
-        plt.plot(train_sizes, val_bias_scores, label=f'Validation set Bias Score')
-        plt.plot(train_sizes, test_bias_scores, label=f'Test set Bias Score')
-        plt.xlabel('Number of Items in Training Set')
-        plt.ylabel('Bias Score')
-        plt.title(f'Bias Score against {self.sensitive_attribute} vs. Training Set Size with {self.batching.__name__}')
-        plt.legend()
-        plt.show()
+        if show_plots:
+            plt.figure(figsize=(10, 5))
+            plt.plot(train_sizes, val_bias_scores, label=f'Validation set Bias Score')
+            plt.plot(train_sizes, test_bias_scores, label=f'Test set Bias Score')
+            plt.xlabel('Number of Items in Training Set')
+            plt.ylabel('Bias Score')
+            plt.title(f'Bias Score against {self.sensitive_attribute} vs. Training Set Size with {self.batching.__name__}')
+            plt.legend()
+            plt.show()
 
     def masking(self, x_data: Union[np.ndarray, pd.DataFrame]) -> Union[np.ndarray, pd.DataFrame]:
         x_data_masked = x_data.copy()

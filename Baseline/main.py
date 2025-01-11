@@ -1,6 +1,6 @@
 import pandas as pd
 
-from baseline import run_baseline
+from Baseline.baseline import run_baseline
 
 def baseline_main(datasets : list[dict], model) -> pd.DataFrame:
     """
@@ -33,9 +33,6 @@ def baseline_main(datasets : list[dict], model) -> pd.DataFrame:
     results_df["Run Type"] = "Baseline"
     results_df = results_df[
         ["Run Type", "Dataset"] + [col for col in results_df.columns if col not in ["Run Type", "Dataset"]]]
-    model_name = model.__class__.__name__
-    results_df.to_csv(f"individual_results/baseline_results_{model_name}.csv", index=False)
-
     return results_df
 
 if __name__ == "__main__":
