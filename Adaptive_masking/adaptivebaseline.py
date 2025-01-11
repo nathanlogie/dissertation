@@ -30,10 +30,8 @@ class AdaptiveBaseline:
     def predict(self, x_test: Union[np.ndarray, pd.DataFrame]) -> np.ndarray:
         return self.model.predict(x_test)
 
-    def evaluate_bias(self, y_true: Union[np.ndarray, pd.Series],
-                      y_pred: np.ndarray) -> float:
-
-        return self.bias_metric(y_true, y_pred, self.sensitive_attribute)
+    def evaluate_bias(self, y_true, y_pred, sensitive_attr):
+        return self.bias_metric(y_true, y_pred, sensitive_attr)
 
     def train(self, x_train: Union[np.ndarray, pd.DataFrame],
               y_train: Union[np.ndarray, pd.Series],
@@ -80,7 +78,11 @@ class AdaptiveBaseline:
 
             # Evaluate bias on the validation set
             y_pred_val = self.model.predict(x_val)
-            val_bias_score = self.evaluate_bias(y_val, y_pred_val)
+            val_bias_score = self.evaluate_bias(
+                y_val,
+                y_pred_val,
+                x_val[self.sensitive_attribute]
+            )
 
             if np.isnan(val_bias_score):
                 print(f"Skipping Batch {batch_idx + 1} due to NaN bias score")
@@ -90,7 +92,7 @@ class AdaptiveBaseline:
 
             # Evaluate bias on the test set
             y_pred_test = self.model.predict(x_test)
-            test_bias_score = self.evaluate_bias(y_test, y_pred_test)
+            test_bias_score = self.evaluate_bias(y_test, y_pred_test, x_test[self.sensitive_attribute])
             test_bias_scores.append(test_bias_score)
 
             print(f"Validation Bias Score for Batch {batch_idx + 1}: {val_bias_score}")
