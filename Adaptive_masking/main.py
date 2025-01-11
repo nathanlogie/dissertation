@@ -2,7 +2,7 @@ from sklearn.linear_model import LogisticRegression
 
 from Adaptive_masking.adaptivebaseline import AdaptiveBaseline
 from Adaptive_masking.bias_metrics import example_bias_metric
-from batching_strats import batching_strats
+from batching_strategies.batching_strats import batching_strats
 
 def main():
     processed_datasets = [
