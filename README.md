@@ -25,7 +25,7 @@ The following datasets were selected based on availability and to allow accurate
 
 ## Models  Used
 
-Both models were selected to allow for testing with both classifier and regression models and based on their use in AIF360
+Both models were selected to allow for testing with two different models and based on their use in AIF360
 
 - Random Forest Classifier
     - Sourced from https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html
