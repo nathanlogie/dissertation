@@ -135,8 +135,8 @@ class AdaptiveBaseline:
 
         if show_plots:
             plt.figure(figsize=(10, 5))
-            plt.plot(train_sizes, val_bias_scores, label=f'Validation set Bias Score')
-            plt.plot(train_sizes, test_bias_scores, label=f'Test set Bias Score')
+            plt.plot(train_sizes, val_bias_scores, marker='o', label='Validation Bias Score')
+            plt.plot(train_sizes, test_bias_scores, marker='x', label='Test Bias Score')
             plt.xlabel('Number of Items in Training Set')
             plt.ylabel('Bias Score')
             plt.title(f'Bias Scores vs Training Size for Sensitive Attribute: {self.sensitive_attribute}')
@@ -144,9 +144,10 @@ class AdaptiveBaseline:
             plt.show()
 
     def masking(self, x_data: Union[np.ndarray, pd.DataFrame]) -> Union[np.ndarray, pd.DataFrame]:
-        x_data_masked = x_data.copy()
-        x_data_masked[self.sensitive_attribute] = self.mask
-        return x_data_masked
+        masked_data = x_data.copy()
+        if self.sensitive_attribute in masked_data.columns:
+            masked_data[self.sensitive_attribute] = self.mask
+        return masked_data
 
     def main(self, filepath: str, sensitive_attribute: str, target_column: str,
              display_metrics: bool = False) -> dict:
