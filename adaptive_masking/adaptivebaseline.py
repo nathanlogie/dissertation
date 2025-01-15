@@ -53,7 +53,7 @@ class AdaptiveBaseline:
     def train(self, x_train: Union[np.ndarray, pd.DataFrame],
               y_train: Union[np.ndarray, pd.Series],
               x_val: pd.DataFrame, y_val: pd.Series, x_test: pd.DataFrame, y_test: pd.Series,
-              show_plots: bool = False) -> None:
+              show_plots: bool) -> None:
 
         """
            Train the model adaptively, applying masking if bias exceeds threshold.
@@ -152,7 +152,7 @@ class AdaptiveBaseline:
         return masked_data
 
     def main(self, filepath: str, sensitive_attribute: str, target_column: str,
-             display_metrics: bool = False) -> dict:
+             display_metrics: bool = False, show_plots: bool = False) -> dict:
         df = pd.read_csv(filepath, header=0, skipinitialspace=True)
         df[sensitive_attribute] = LabelEncoder().fit_transform(df[sensitive_attribute])
 
@@ -161,7 +161,7 @@ class AdaptiveBaseline:
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
         X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=0.2, random_state=42)
 
-        self.train(X_train, y_train, X_val, y_val, X_test, y_test)
+        self.train(X_train, y_train, X_val, y_val, X_test, y_test, show_plots)
 
         X_test_copy = X_test.copy()
         X_test_copy[target_column] = y_test.to_numpy()

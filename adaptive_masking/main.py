@@ -22,6 +22,7 @@ def adaptive_baseline_main(datasets : list[dict], model) -> pd.DataFrame:
                 filepath=dataset["filepath"],
                 sensitive_attribute=dataset["sensitive_attribute"],
                 target_column=dataset["target_column"],
+                show_plots=False
             )
 
             results["Batching Strategy"] = batching_strategy.__name__
