@@ -3,8 +3,8 @@ from matplotlib import pyplot as plt
 from sklearn.linear_model import LogisticRegression
 from sympy.plotting import plot3d
 
-from Adaptive_masking.adaptivebaseline import AdaptiveBaseline
-from Adaptive_masking.bias_metrics import example_bias_metric
+from adaptive_masking.adaptivebaseline import AdaptiveBaseline
+from adaptive_masking.bias_metrics import example_bias_metric
 from batching_strategies.batching_strats import batching_strats
 import warnings
 
