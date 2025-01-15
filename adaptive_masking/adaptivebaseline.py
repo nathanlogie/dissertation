@@ -95,7 +95,9 @@ class AdaptiveBaseline:
 
             # Apply masking if necessary
             if self.is_masking:
+                print(x_batch[0:5][self.sensitive_attribute])
                 x_batch = self.masking(x_batch)
+                print(x_batch[0:5][self.sensitive_attribute])
 
             # Train the model
             self.model.fit(x_batch, y_batch)
@@ -128,6 +130,8 @@ class AdaptiveBaseline:
 
             # Adaptively decide masking for the next batch
             self.is_masking = (val_bias_score > self.threshold * 0.9) if val_bias_score else False
+            if self.is_masking:
+                print(f"masking with {self.mask} for sensitive attribute: {self.sensitive_attribute}")
 
 
         if show_plots:
