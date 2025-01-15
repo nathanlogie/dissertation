@@ -99,9 +99,7 @@ class AdaptiveBaseline:
 
             # Apply masking if necessary
             if self.is_masking:
-                print(x_batch[0:5][self.sensitive_attribute])
                 x_batch = self.masking(x_batch)
-                print(x_batch[0:5][self.sensitive_attribute])
 
             x_cumulative_training = pd.concat([x_cumulative_training, x_batch], ignore_index=True)
             y_cumulative_training = pd.concat([y_cumulative_training, y_batch], ignore_index=True)
@@ -136,8 +134,6 @@ class AdaptiveBaseline:
             # print(f"Test Bias Score for Batch {batch_idx + 1}: {test_bias_score}")
 
             self.is_masking = (val_bias_score > self.threshold) if val_bias_score else False
-            if self.is_masking:
-                print(f"masking with {self.mask} for sensitive attribute: {self.sensitive_attribute}")
 
         if show_plots:
             plt.figure(figsize=(10, 5))
