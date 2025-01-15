@@ -1,12 +1,13 @@
+import warnings
+
 import pandas as pd
 from matplotlib import pyplot as plt
 from sklearn.linear_model import LogisticRegression
-from sympy.plotting import plot3d
 
 from adaptive_masking.adaptivebaseline import AdaptiveBaseline
 from adaptive_masking.bias_metrics import example_bias_metric
 from batching_strategies.batching_strats import batching_strats
-import warnings
+
 
 def main():
     warnings.simplefilter(action='ignore', category=FutureWarning)
@@ -15,11 +16,11 @@ def main():
         {"name": "Income Census", "filepath": "../datasets/processed_datasets/adult.csv",
          "sensitive_attribute": "sex",
          "target_column": "income"}
-        ]
+    ]
 
     all_results = []
     for batching_strategy in batching_strats:
-        for i in range(5,105,5):
+        for i in range(5, 105, 5):
             print(i, batching_strategy.__name__)
             currAdaptive = AdaptiveBaseline(
                 model=LogisticRegression(solver='liblinear', random_state=1),
@@ -43,11 +44,13 @@ def main():
 
     results_df = pd.DataFrame(all_results)
     results_df = results_df[
-        ["Batching Strategy", "Batches"] + [col for col in results_df.columns if col not in ["Batching Strategy", "Batches"]]]
+        ["Batching Strategy", "Batches"] + [col for col in results_df.columns if
+                                            col not in ["Batching Strategy", "Batches"]]]
     results_df.sort_values(["Batching Strategy", "Batches"], inplace=True)
     results_df.to_csv("batching_results.csv", index=False)
     plot(results_df)
     return results_df
+
 
 def plot(results_df):
     batching_strategies = results_df['Batching Strategy'].unique()
@@ -79,6 +82,7 @@ def plot(results_df):
         # Show plot
         plt.grid(True)
         plt.show()
+
 
 if __name__ == "__main__":
     main()

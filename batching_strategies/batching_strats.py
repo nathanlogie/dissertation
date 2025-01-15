@@ -113,7 +113,6 @@ def batch_by_similarity(data, target, sensitive_attribute, epochs) -> list:
                                    unpriv_group.mean().values.reshape(1, -1),
                                    metric='euclidean')[0, 0]
 
-
     batches = np.array_split(data, epochs)
 
     similarities = [(batch, compute_similarity(batch)) for batch in batches]
@@ -121,7 +120,10 @@ def batch_by_similarity(data, target, sensitive_attribute, epochs) -> list:
 
     return sorted_batches
 
+
 def no_batching(training_data, target, sensitive_attribute, epochs):
     return np.array_split(training_data, epochs)
 
-batching_strats = [batch_equal_sensitive, batch_demographic_parity, batch_by_correlation, batch_by_similarity, no_batching]
+
+batching_strats = [batch_equal_sensitive, batch_demographic_parity, batch_by_correlation, batch_by_similarity,
+                   no_batching]

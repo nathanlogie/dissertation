@@ -4,7 +4,8 @@ from adaptive_masking.adaptivebaseline import AdaptiveBaseline
 from adaptive_masking.bias_metrics import example_bias_metric
 from batching_strategies.batching_strats import batching_strats
 
-def adaptive_baseline_main(datasets : list[dict], model) -> pd.DataFrame:
+
+def adaptive_baseline_main(datasets: list[dict], model) -> pd.DataFrame:
     all_results = []
 
     for dataset in datasets:

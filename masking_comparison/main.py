@@ -1,10 +1,12 @@
+import warnings
+
 import pandas as pd
 from sklearn.linear_model import LogisticRegression
 
 from adaptive_masking.adaptivebaseline import AdaptiveBaseline
 from adaptive_masking.bias_metrics import example_bias_metric
 from batching_strategies.batching_strats import batching_strats
-import warnings
+
 
 def main():
     warnings.simplefilter(action='ignore', category=FutureWarning)
@@ -21,7 +23,7 @@ def main():
          "target_column": "two_year_recid"}
     ]
 
-    masking_values = [-1,0,1]
+    masking_values = [-1, 0, 1]
 
     all_results = []
     for mask in masking_values:

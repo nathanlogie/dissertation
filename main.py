@@ -1,9 +1,9 @@
 import pandas as pd
-from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
 
-from baseline.main import baseline_main
 from adaptive_masking.main import adaptive_baseline_main
+from baseline.main import baseline_main
 
 
 def main():

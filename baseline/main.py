@@ -2,7 +2,8 @@ import pandas as pd
 
 from baseline.baseline import run_baseline
 
-def baseline_main(datasets : list[dict], model) -> pd.DataFrame:
+
+def baseline_main(datasets: list[dict], model) -> pd.DataFrame:
     """
     Runs baseline experiments on three datasets and prints individual_results.
 
@@ -34,6 +35,7 @@ def baseline_main(datasets : list[dict], model) -> pd.DataFrame:
     results_df = results_df[
         ["Run Type", "Dataset"] + [col for col in results_df.columns if col not in ["Run Type", "Dataset"]]]
     return results_df
+
 
 if __name__ == "__main__":
     baseline_main()

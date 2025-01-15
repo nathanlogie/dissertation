@@ -1,5 +1,5 @@
-from sklearn.preprocessing import OneHotEncoder
 import pandas as pd
+from sklearn.preprocessing import OneHotEncoder
 
 
 def one_hot_encode_column(data, column_name):
