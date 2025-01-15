@@ -1,4 +1,6 @@
 from typing import Union, Callable
+
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from aif360.datasets import BinaryLabelDataset
@@ -9,7 +11,6 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import LabelEncoder, StandardScaler
-import matplotlib.pyplot as plt
 
 
 class AdaptiveBaseline:
@@ -51,7 +52,8 @@ class AdaptiveBaseline:
 
     def train(self, x_train: Union[np.ndarray, pd.DataFrame],
               y_train: Union[np.ndarray, pd.Series],
-              x_val: pd.DataFrame, y_val: pd.Series, x_test: pd.DataFrame, y_test: pd.Series, show_plots: bool = False) -> None:
+              x_val: pd.DataFrame, y_val: pd.Series, x_test: pd.DataFrame, y_test: pd.Series,
+              show_plots: bool = False) -> None:
 
         """
            Train the model adaptively, applying masking if bias exceeds threshold.
@@ -79,9 +81,11 @@ class AdaptiveBaseline:
         val_bias_scores = []
         test_bias_scores = []
 
+        x_cumulative_training = pd.DataFrame()
+        y_cumulative_training = pd.Series(dtype=y_train.dtype)
+
         for batch_idx, batch in enumerate(batches):
             # print(f"Batch {batch_idx + 1}/{len(batches)}")
-
 
             x_batch = batch.drop(columns=target_name)
             y_batch = batch[target_name]
@@ -99,11 +103,14 @@ class AdaptiveBaseline:
                 x_batch = self.masking(x_batch)
                 print(x_batch[0:5][self.sensitive_attribute])
 
+            x_cumulative_training = pd.concat([x_cumulative_training, x_batch], ignore_index=True)
+            y_cumulative_training = pd.concat([y_cumulative_training, y_batch], ignore_index=True)
+
             # Train the model
-            self.model.fit(x_batch, y_batch)
+            self.model.fit(x_cumulative_training, y_cumulative_training)
 
             # Update training size
-            current_train_size = len(x_train) + (batch_idx + 1) * len(x_batch)
+            current_train_size = len(x_cumulative_training)
             train_sizes.append(current_train_size)
 
             # Evaluate bias on the validation set
@@ -131,7 +138,6 @@ class AdaptiveBaseline:
             self.is_masking = (val_bias_score > self.threshold) if val_bias_score else False
             if self.is_masking:
                 print(f"masking with {self.mask} for sensitive attribute: {self.sensitive_attribute}")
-
 
         if show_plots:
             plt.figure(figsize=(10, 5))
