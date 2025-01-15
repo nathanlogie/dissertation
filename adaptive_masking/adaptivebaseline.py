@@ -128,8 +128,7 @@ class AdaptiveBaseline:
             # print(f"Validation Bias Score for Batch {batch_idx + 1}: {val_bias_score}")
             # print(f"Test Bias Score for Batch {batch_idx + 1}: {test_bias_score}")
 
-            # Adaptively decide masking for the next batch
-            self.is_masking = (val_bias_score > self.threshold * 0.9) if val_bias_score else False
+            self.is_masking = (val_bias_score > self.threshold) if val_bias_score else False
             if self.is_masking:
                 print(f"masking with {self.mask} for sensitive attribute: {self.sensitive_attribute}")
 
