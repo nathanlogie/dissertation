@@ -16,7 +16,19 @@ class AdaptiveBaseline:
 
     def __init__(self, model: Union[LogisticRegression, RandomForestClassifier], bias_metric: Callable,
                  threshold: float, sensitive_attribute: str, batching: Callable[[pd.DataFrame, str, str, int], list],
-                 mask: int = 0, batch_number: int = 10) -> None:
+                 mask: int = 0, num_batches: int = 10) -> None:
+
+        """
+            Parameters:
+            - model: Classifier model (e.g., LogisticRegression, RandomForestClassifier)
+            - bias_metric: Function to compute a bias metric given true and predicted values.
+            - threshold: Threshold for determining when to apply masking.
+            - sensitive_attribute: Name of the sensitive attribute in the dataset.
+            - batching: Function that splits the dataset into batches for training.
+              Expects input as (dataframe, target column, sensitive attribute, number of batches).
+            - mask: Value to use for masking sensitive attributes.
+            - batch_number: Number of batches to split training data into.
+            """
 
         self.model = make_pipeline(StandardScaler(), model)
         self.bias_metric = bias_metric
@@ -25,17 +37,31 @@ class AdaptiveBaseline:
         self.sensitive_attribute = sensitive_attribute
         self.is_masking = False
         self.batching = batching
-        self.batch_number = batch_number
+        self.num_batches = num_batches
 
     def predict(self, x_test: Union[np.ndarray, pd.DataFrame]) -> np.ndarray:
         return self.model.predict(x_test)
 
     def evaluate_bias(self, y_true, y_pred, sensitive_attr):
-        return self.bias_metric(y_true, y_pred, sensitive_attr)
+        bias_score = self.bias_metric(y_true, y_pred, sensitive_attr)
+        if np.isnan(bias_score):
+            print("Warning: Bias metric returned NaN.")
+            return 0
+        return bias_score
 
     def train(self, x_train: Union[np.ndarray, pd.DataFrame],
               y_train: Union[np.ndarray, pd.Series],
               x_val: pd.DataFrame, y_val: pd.Series, x_test: pd.DataFrame, y_test: pd.Series, show_plots: bool = False) -> None:
+
+        """
+           Train the model adaptively, applying masking if bias exceeds threshold.
+
+           Parameters:
+           - x_train, y_train: Training features and labels.
+           - x_val, y_val: Validation features and labels for bias evaluation.
+           - x_test, y_test: Test set for final evaluation.
+           - show_plots: Display bias score plots if True.
+           """
 
         if isinstance(x_train, np.ndarray):
             x_train = pd.DataFrame(x_train)
@@ -47,7 +73,7 @@ class AdaptiveBaseline:
         combined_training = pd.concat([x_train, y_train], axis=1)
         target_name = y_train.name
 
-        batches = self.batching(combined_training, target_name, self.sensitive_attribute, self.batch_number)
+        batches = self.batching(combined_training, target_name, self.sensitive_attribute, self.num_batches)
 
         train_sizes = []
         val_bias_scores = []
@@ -101,7 +127,8 @@ class AdaptiveBaseline:
             # print(f"Test Bias Score for Batch {batch_idx + 1}: {test_bias_score}")
 
             # Adaptively decide masking for the next batch
-            self.is_masking = val_bias_score > self.threshold
+            self.is_masking = (val_bias_score > self.threshold * 0.9) if val_bias_score else False
+
 
         if show_plots:
             plt.figure(figsize=(10, 5))
@@ -109,7 +136,7 @@ class AdaptiveBaseline:
             plt.plot(train_sizes, test_bias_scores, label=f'Test set Bias Score')
             plt.xlabel('Number of Items in Training Set')
             plt.ylabel('Bias Score')
-            plt.title(f'Bias Score against {self.sensitive_attribute} vs. Training Set Size with {self.batching.__name__}')
+            plt.title(f'Bias Scores vs Training Size for Sensitive Attribute: {self.sensitive_attribute}')
             plt.legend()
             plt.show()
 

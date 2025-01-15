@@ -27,7 +27,7 @@ def main():
                 threshold=0.1,
                 sensitive_attribute=adjusted_datasets[0]["sensitive_attribute"],
                 batching=batching_strategy,
-                batch_number=i
+                num_batches=i
             )
 
             results = currAdaptive.main(
