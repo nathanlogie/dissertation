@@ -4,7 +4,7 @@ from scipy.stats import pearsonr
 from sklearn.metrics import pairwise_distances
 
 
-def batch_equal_sensitive(training_data, target, sensitive_attribute, epochs) -> list:
+def batch_equal_sensitive(training_data, target, sensitive_attribute, batch_size) -> list:
     """
         Batches the training data into batches with an equal proportion of sensitive and non-sensitive examples.
 
@@ -12,13 +12,13 @@ def batch_equal_sensitive(training_data, target, sensitive_attribute, epochs) ->
         - training_data (pandas.DataFrame): The training data to be batched.
         - target (str): The column name of the target variable in the dataset. (unused in this function)
         - sensitive_attribute (str): The column name of the sensitive attribute in the dataset.
-        - epochs (int): The number of batches to create.
+          - batch_size (int): The size of batch to use.
 
         Returns:
         - list: A list of batches, each containing an equal proportion of sensitive and non-sensitive examples.
 
         """
-
+    epochs = int(len(training_data) / batch_size)
     batches = []
     for value in training_data[sensitive_attribute].unique():
         subset = training_data[training_data[sensitive_attribute] == value]
@@ -31,7 +31,7 @@ def batch_equal_sensitive(training_data, target, sensitive_attribute, epochs) ->
     return batches
 
 
-def batch_demographic_parity(training_data, target, sensitive_attribute, epochs) -> list:
+def batch_demographic_parity(training_data, target, sensitive_attribute, batch_size) -> list:
     """
           Batches the training data into batches that all meet the demographic parity 4/5 ratio criterion.
 
@@ -39,7 +39,7 @@ def batch_demographic_parity(training_data, target, sensitive_attribute, epochs)
           - training_data (pandas.DataFrame): The training data to be batched.
           - target (str): The column name of the target variable in the dataset.
           - sensitive_attribute (str): The column name of the sensitive attribute in the dataset.
-          - epochs (int): The number of batches to create.
+          - batch_size (int): The size of batch to use.
 
           Returns:
           - list: A list of batches, each meeting the demographic parity 4/5 ratio criterion.
@@ -54,6 +54,7 @@ def batch_demographic_parity(training_data, target, sensitive_attribute, epochs)
         return True
 
     batches = []
+    epochs = int(len(training_data) / batch_size)
     subsets = np.array_split(training_data, epochs)
     for subset in subsets:
         if meets_demographic_parity(subset):
@@ -61,7 +62,7 @@ def batch_demographic_parity(training_data, target, sensitive_attribute, epochs)
     return batches
 
 
-def batch_by_correlation(training_data, target, sensitive_attribute, epochs) -> list:
+def batch_by_correlation(training_data, target, sensitive_attribute, batch_size) -> list:
     """
      Batches the training data into batches ordered by how closely correlated the sensitive attribute is to the target variable.
 
@@ -69,13 +70,13 @@ def batch_by_correlation(training_data, target, sensitive_attribute, epochs) -> 
      - training_data (pandas.DataFrame): The training data to be batched.
      - target (str): The column name of the target variable in the dataset.
      - sensitive_attribute (str): The column name of the sensitive attribute in the dataset.
-     - epochs (int): The number of batches to create.
+     - batch_size (int): The size of batch to use.
 
      Returns:
      - list: A list of batches, ordered by correlation between the sensitive attribute and the target variable.
 
      """
-
+    epochs = int(len(training_data) / batch_size)
     batches = np.array_split(training_data, epochs)
     correlations = [
         (batch, abs(pearsonr(batch[sensitive_attribute], batch[target])[0]))
@@ -85,7 +86,7 @@ def batch_by_correlation(training_data, target, sensitive_attribute, epochs) -> 
     return sorted_batches
 
 
-def batch_by_similarity(data, target, sensitive_attribute, epochs) -> list:
+def batch_by_similarity(training_data, target, sensitive_attribute, batch_size) -> list:
     """
        Batches the training data into batches ordered by how similar the sensitive attribute distributions are
 
@@ -93,7 +94,7 @@ def batch_by_similarity(data, target, sensitive_attribute, epochs) -> list:
        - training_data (pandas.DataFrame): The training data to be batched.
        - target (str): The column name of the target variable in the dataset. (unused in this function)
        - sensitive_attribute (str): The column name of the sensitive attribute in the dataset.
-       - epochs (int): The number of batches to create.
+       - batch_size (int): The size of batch to use.
 
        Returns:
        - list: A list of batches, ordered by correlation between the sensitive attribute and the target variable.
@@ -101,7 +102,7 @@ def batch_by_similarity(data, target, sensitive_attribute, epochs) -> list:
    """
 
     def compute_similarity(batch):
-        features = [col for col in data.columns if col not in {target, sensitive_attribute}]
+        features = [col for col in training_data.columns if col not in {target, sensitive_attribute}]
 
         priv_group = batch[batch[sensitive_attribute] == 1][features]
         unpriv_group = batch[batch[sensitive_attribute] == 0][features]
@@ -113,7 +114,8 @@ def batch_by_similarity(data, target, sensitive_attribute, epochs) -> list:
                                    unpriv_group.mean().values.reshape(1, -1),
                                    metric='euclidean')[0, 0]
 
-    batches = np.array_split(data, epochs)
+    epochs = int(len(training_data) / batch_size)
+    batches = np.array_split(training_data, epochs)
 
     similarities = [(batch, compute_similarity(batch)) for batch in batches]
     sorted_batches = [b[0] for b in sorted(similarities, key=lambda x: x[1], reverse=True)]
@@ -121,7 +123,8 @@ def batch_by_similarity(data, target, sensitive_attribute, epochs) -> list:
     return sorted_batches
 
 
-def no_batching(training_data, target, sensitive_attribute, epochs):
+def no_batching(training_data, target, sensitive_attribute, batch_size):
+    epochs = int(len(training_data) / batch_size)
     return np.array_split(training_data, epochs)
 
 

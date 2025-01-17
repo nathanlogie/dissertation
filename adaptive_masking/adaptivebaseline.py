@@ -17,7 +17,7 @@ class AdaptiveBaseline:
 
     def __init__(self, model: Union[LogisticRegression, RandomForestClassifier], bias_metric: Callable,
                  threshold: float, sensitive_attribute: str, batching: Callable[[pd.DataFrame, str, str, int], list],
-                 mask: int = 0, num_batches: int = 10) -> None:
+                 mask: int = 0, num_batches: int = 32) -> None:
 
         """
             Parameters:
@@ -85,7 +85,7 @@ class AdaptiveBaseline:
         y_cumulative_training = pd.Series(dtype=y_train.dtype)
 
         for batch_idx, batch in enumerate(batches):
-            # print(f"Batch {batch_idx + 1}/{len(batches)}")
+            print(f"Batch {batch_idx + 1}/{len(batches)}")
 
             x_batch = batch.drop(columns=target_name)
             y_batch = batch[target_name]
