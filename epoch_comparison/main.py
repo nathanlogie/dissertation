@@ -15,30 +15,37 @@ def main():
     adjusted_datasets = [
         {"name": "Income Census", "filepath": "../datasets/processed_datasets/adult.csv",
          "sensitive_attribute": "sex",
-         "target_column": "income"}
+         "target_column": "income"},
+        {"name": "German Credit", "filepath": "../datasets/processed_datasets/german_credit.csv",
+         "sensitive_attribute": "age",
+         "target_column": "credit_risk"},
+        {"name": "Recidivism Compass", "filepath": "../datasets/processed_datasets/compass.csv",
+         "sensitive_attribute": "race",
+         "target_column": "two_year_recid"}
     ]
 
     all_results = []
     batch_sizes = [8,16,32,64,96,128,256]
-    for i in batch_sizes:
-        print(i)
-        currAdaptive = AdaptiveBaseline(
-            model=LogisticRegression(solver='liblinear', random_state=1),
-            bias_metric=example_bias_metric,
-            threshold=0.1,
-            sensitive_attribute=adjusted_datasets[0]["sensitive_attribute"],
-            num_batches=i
-        )
+    for dataset in adjusted_datasets:
+        for i in batch_sizes:
+            print(i)
+            currAdaptive = AdaptiveBaseline(
+                model=LogisticRegression(solver='liblinear', random_state=1),
+                bias_metric=example_bias_metric,
+                threshold=0.1,
+                sensitive_attribute=dataset["sensitive_attribute"],
+                num_batches=i
+            )
 
-        results = currAdaptive.main(
-            filepath=adjusted_datasets[0]["filepath"],
-            sensitive_attribute=adjusted_datasets[0]["sensitive_attribute"],
-            target_column=adjusted_datasets[0]["target_column"],
-        )
+            results = currAdaptive.main(
+                filepath=dataset["filepath"],
+                sensitive_attribute=dataset["sensitive_attribute"],
+                target_column=dataset["target_column"],
+            )
 
-        results["Dataset"] = adjusted_datasets[0]["name"]
-        results["Batch Size"] = i
-        all_results.append(results)
+            results["Dataset"] = dataset["name"]
+            results["Batch Size"] = i
+            all_results.append(results)
 
     results_df = pd.DataFrame(all_results)
     results_df = results_df[

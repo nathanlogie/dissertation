@@ -18,7 +18,8 @@ from batching_strategies.batching_strats import batching_strats
 class AdaptiveBaseline:
 
     def __init__(self, model: Union[LogisticRegression, RandomForestClassifier], bias_metric: Callable,
-                 threshold: float, sensitive_attribute: str, batching: Callable[[pd.DataFrame, str, str, int], list] = batching_strats[-1],
+                 threshold: float, sensitive_attribute: str,
+                 batching: Callable[[pd.DataFrame, str, str, int], list] = batching_strats[-1],
                  mask: int = 0, num_batches: int = 96) -> None:
 
         """
@@ -88,9 +89,6 @@ class AdaptiveBaseline:
 
         for batch_idx, batch in enumerate(batches):
 
-            if batch_idx/len(batches) in [0.2, 0.4, 0.6, 0.8]:
-                print(f"Training % {batch_idx/len(batches)*100}")
-
             x_batch = batch.drop(columns=target_name)
             y_batch = batch[target_name]
 
@@ -130,7 +128,6 @@ class AdaptiveBaseline:
             y_pred_test = self.model.predict(x_test)
             test_bias_score = self.evaluate_bias(y_test, y_pred_test, x_test[self.sensitive_attribute])
             test_bias_scores.append(test_bias_score)
-
 
             self.is_masking = (val_bias_score > self.threshold) if val_bias_score else False
 
