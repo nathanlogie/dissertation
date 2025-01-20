@@ -30,7 +30,7 @@ class AdaptiveBaseline:
             - batching: Function that splits the dataset into batches for training.
               Expects input as (dataframe, target column, sensitive attribute, number of batches).
             - mask: Value to use for masking sensitive attributes.
-            - batch_number: Number of batches to split training data into.
+            - num_batches: Number of batches to split training data into.
             """
 
         self.model = make_pipeline(StandardScaler(), model)
@@ -87,13 +87,12 @@ class AdaptiveBaseline:
         y_cumulative_training = pd.Series(dtype=y_train.dtype)
 
         for batch_idx, batch in enumerate(batches):
-            print(f"Batch {batch_idx + 1}/{len(batches)}")
+
+            if batch_idx/len(batches) in [0.2, 0.4, 0.6, 0.8]:
+                print(f"Training % {batch_idx/len(batches)*100}")
 
             x_batch = batch.drop(columns=target_name)
             y_batch = batch[target_name]
-
-            # print(f"Batch {batch_idx + 1} size: {len(x_batch)}")
-            # print(f"Sensitive attribute distribution:\n{x_batch[self.sensitive_attribute].value_counts()}")
 
             if x_batch.empty:
                 print(f"Skipping empty batch {batch_idx + 1}")
@@ -132,8 +131,6 @@ class AdaptiveBaseline:
             test_bias_score = self.evaluate_bias(y_test, y_pred_test, x_test[self.sensitive_attribute])
             test_bias_scores.append(test_bias_score)
 
-            # print(f"Validation Bias Score for Batch {batch_idx + 1}: {val_bias_score}")
-            # print(f"Test Bias Score for Batch {batch_idx + 1}: {test_bias_score}")
 
             self.is_masking = (val_bias_score > self.threshold) if val_bias_score else False
 

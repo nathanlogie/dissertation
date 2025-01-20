@@ -1,3 +1,5 @@
+import warnings
+
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
@@ -7,6 +9,7 @@ from baseline.main import baseline_main
 
 
 def main():
+    warnings.simplefilter(action='ignore', category=FutureWarning)
     datasets = [
         {"name": "Income Census", "filepath": "datasets/processed_datasets/adult.csv",
          "sensitive_attribute": "sex",
@@ -21,7 +24,7 @@ def main():
 
     models = [
         ("Logistic Regression", LogisticRegression(solver='liblinear', random_state=1)),
-        ("Random Forest", RandomForestClassifier(random_state=1))
+        # ("Random Forest", RandomForestClassifier(random_state=1))
     ]
 
     main_runs = [baseline_main, adaptive_baseline_main]
