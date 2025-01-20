@@ -51,7 +51,7 @@ def main():
     results_df = results_df[
         ["Batch Size"] + [col for col in results_df.columns if
                                             col not in ["Batch Size"]]]
-    results_df.to_csv("batching_results.csv", index=False)
+    results_df.to_csv("batch_size_results.csv", index=False)
     plot(results_df)
     return results_df
 
