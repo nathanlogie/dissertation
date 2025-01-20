@@ -27,7 +27,6 @@ def main():
             bias_metric=example_bias_metric,
             threshold=0.1,
             sensitive_attribute=adjusted_datasets[0]["sensitive_attribute"],
-            batching=batching_strats[-1],
             num_batches=i
         )
 

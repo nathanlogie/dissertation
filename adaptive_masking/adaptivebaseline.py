@@ -12,12 +12,14 @@ from sklearn.model_selection import train_test_split
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 
+from batching_strategies.batching_strats import batching_strats
+
 
 class AdaptiveBaseline:
 
     def __init__(self, model: Union[LogisticRegression, RandomForestClassifier], bias_metric: Callable,
-                 threshold: float, sensitive_attribute: str, batching: Callable[[pd.DataFrame, str, str, int], list],
-                 mask: int = 0, num_batches: int = 32) -> None:
+                 threshold: float, sensitive_attribute: str, batching: Callable[[pd.DataFrame, str, str, int], list] = batching_strats[-1],
+                 mask: int = 0, num_batches: int = 96) -> None:
 
         """
             Parameters:
