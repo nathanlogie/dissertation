@@ -44,6 +44,10 @@ def main():
     print(combined_results_df)
     combined_results_df.to_csv("combined_results.csv", index=False)
 
+    simplified_results = combined_results_df.drop(["Dataset"], axis=1)
+    simplified_results = simplified_results.groupby(["Model", "Run Type"]).mean().reset_index().round(3)
+    simplified_results.to_csv("simplified_combined_results.csv", index=False)
+
 
 if __name__ == "__main__":
     main()
