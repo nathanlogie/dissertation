@@ -203,12 +203,13 @@ class AdaptiveBaseline:
             print(f"FPR Parity: {fpr_parity}")
 
         return {
-            "Accuracy": accuracy,
-            "Precision": precision,
-            "Recall": recall,
-            "F1 Score": f1,
-            "Disparate Impact": disparate_impact,
-            "Statistical Parity Difference": statistical_parity_diff,
-            "PPV Parity": ppv_parity,
-            "FPR Parity": fpr_parity
+            "Accuracy": round(accuracy, 3),
+            "Precision": round(precision, 3),
+            "Recall": round(recall, 3),
+            "F1 Score": round(f1, 3),
+            "Disparate Impact": round(disparate_impact, 3),
+            "Statistical Parity Difference": round(statistical_parity_diff, 3),
+            "PPV Parity": round(ppv_parity, 3),
+            "FPR Parity": round(fpr_parity, 3)
         }
+

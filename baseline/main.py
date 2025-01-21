@@ -31,7 +31,7 @@ def baseline_main(datasets: list[dict], model) -> pd.DataFrame:
         all_results.append(result)
 
     results_df = pd.DataFrame(all_results)
-    results_df["Run Type"] = "baseline"
+    results_df["Run Type"] = "Baseline"
     results_df = results_df[
         ["Run Type", "Dataset"] + [col for col in results_df.columns if col not in ["Run Type", "Dataset"]]]
     return results_df

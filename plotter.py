@@ -5,19 +5,21 @@ import seaborn as sns
 data = pd.read_csv("combined_results.csv")
 
 df = pd.DataFrame(data)
+df['Dataset'] = pd.Categorical(df['Dataset'])
 
-metrics = ["Accuracy", "Precision", "Recall", "F1 Score", "Disparate Impact", "Statistical Parity Difference"]
-plt.figure(figsize=(14, 8))
-sns.set_theme(style="whitegrid")
-
+metrics = ["Accuracy", "Precision", "Recall", "F1 Score", "Disparate Impact", "Statistical Parity Difference","PPV Parity","FPR Parity"]
+plt.figure(figsize=(16, 10))
+sns.set_theme(style="ticks")
 for i, metric in enumerate(metrics, 1):
-    plt.subplot(2, 3, i)
+    plt.subplot(2, 4, i)
     sns.barplot(data=df, x="Dataset", y=metric, hue="Run Type")
-    plt.title(metric)
-    plt.xlabel("")
-    plt.ylabel(metric)
+
+    plt.title(f'{metric}', fontsize=14, fontweight='bold')
+    plt.xlabel("Datasets", fontsize=12)
+    plt.ylabel(metric, fontsize=12)
+
+    plt.xticks(rotation=45, ha='right', fontsize=10)
 
 plt.tight_layout()
-plt.show()
 
-summary_table = df.pivot(index=["Dataset"], columns="Run Type", values=["Accuracy", "Precision", "Recall", "F1 Score", "Disparate Impact", "Statistical Parity Difference"])
+plt.show()
