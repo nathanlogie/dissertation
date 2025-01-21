@@ -54,6 +54,10 @@ def main():
         ["Dataset", "Masking Value"] + [col for col in results_df.columns if col not in ["Dataset", "Masking Value"]]]
     results_df.sort_values(["Dataset", "Masking Value"], inplace=True)
     results_df.to_csv("masking_results.csv", index=False)
+
+    simplified_results = results_df.drop(["Dataset"], axis=1)
+    simplified_results = simplified_results.groupby(["Masking Value"]).mean().reset_index()
+    simplified_results.to_csv("masking_simplified_results.csv", index=False)
     return results_df
 
 
