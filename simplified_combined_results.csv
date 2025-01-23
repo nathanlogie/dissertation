@@ -1,0 +1,5 @@
+Model,Run Type,Accuracy,Precision,Recall,F1 Score,Disparate Impact,Statistical Parity Difference,PPV Parity,FPR Parity
+Logistic Regression,Adaptive Masking,0.771,0.731,0.798,0.761,0.691,-0.132,0.032,0.18
+Logistic Regression,Baseline,0.758,0.736,0.745,0.738,0.664,-0.153,0.065,0.103
+Random Forest,Adaptive Masking,0.747,0.714,0.754,0.731,0.691,-0.132,0.026,0.144
+Random Forest,Baseline,0.738,0.712,0.734,0.721,0.664,-0.153,0.059,0.133
