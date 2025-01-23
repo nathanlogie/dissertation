@@ -23,8 +23,8 @@ def main():
     ]
 
     models = [
-        ("Logistic Regression", LogisticRegression(solver='liblinear', random_state=1)),
-        ("Random Forest", RandomForestClassifier(random_state=1))
+        ("Logistic Regression", LogisticRegression(solver='liblinear', random_state=2025)),
+        ("Random Forest", RandomForestClassifier(random_state=2025))
     ]
 
     main_runs = [baseline_main, adaptive_baseline_main]
