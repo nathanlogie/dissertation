@@ -1,10 +1,10 @@
-Dataset,Masking Value,Accuracy,Precision,Recall,F1 Score,Disparate Impact,Statistical Parity Difference,PPV Parity,FPR Parity
-German Credit,-1,0.777,0.809,0.89,0.847,0.881,-0.085,0.028,0.123
-German Credit,0,0.78,0.807,0.9,0.851,0.881,-0.085,0.026,0.138
-German Credit,1,0.787,0.817,0.895,0.854,0.881,-0.085,0.025,0.269
-Income Census,-1,0.849,0.762,0.585,0.662,0.359,-0.204,0.002,0.064
-Income Census,0,0.849,0.741,0.618,0.674,0.359,-0.204,0.019,0.08
-Income Census,1,0.846,0.761,0.568,0.65,0.359,-0.204,0.128,0.088
-Recidivism Compass,-1,0.674,0.663,0.845,0.743,0.832,-0.106,0.043,0.206
-Recidivism Compass,0,0.683,0.682,0.808,0.739,0.832,-0.106,0.02,0.254
-Recidivism Compass,1,0.678,0.681,0.795,0.733,0.832,-0.106,0.065,0.073
+Dataset,Masking Value,Accuracy,Balanced Accuracy,Precision,Recall,F1 Score,Disparate Impact,Statistical Parity Difference,PPV Parity,FPR Parity
+German Credit,-1,0.777,0.703,0.809,0.89,0.847,0.881,-0.085,0.028,0.123
+German Credit,0,0.78,0.703,0.807,0.9,0.851,0.881,-0.085,0.026,0.138
+German Credit,1,0.787,0.717,0.817,0.895,0.854,0.881,-0.085,0.025,0.269
+Income Census,-1,0.849,0.762,0.762,0.585,0.662,0.359,-0.204,0.002,0.064
+Income Census,0,0.849,0.773,0.741,0.618,0.674,0.359,-0.204,0.019,0.08
+Income Census,1,0.846,0.754,0.761,0.568,0.65,0.359,-0.204,0.128,0.088
+Recidivism Compass,-1,0.674,0.652,0.663,0.845,0.743,0.832,-0.106,0.043,0.206
+Recidivism Compass,0,0.683,0.666,0.682,0.808,0.739,0.832,-0.106,0.02,0.254
+Recidivism Compass,1,0.678,0.662,0.681,0.795,0.733,0.832,-0.106,0.065,0.073

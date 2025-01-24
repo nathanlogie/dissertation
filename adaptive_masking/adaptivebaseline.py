@@ -7,7 +7,7 @@ from aif360.datasets import BinaryLabelDataset
 from aif360.metrics import BinaryLabelDatasetMetric, ClassificationMetric
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, balanced_accuracy_score
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import LabelEncoder, StandardScaler
@@ -177,6 +177,7 @@ class AdaptiveBaseline:
                                                      unprivileged_groups=[{sensitive_attribute: 0}])
 
         accuracy = accuracy_score(y_test, y_pred)
+        bal_accuracy = balanced_accuracy_score(y_test, y_pred)
         precision = precision_score(y_test, y_pred, zero_division=1)
         recall = recall_score(y_test, y_pred)
         f1 = f1_score(y_test, y_pred)
@@ -193,6 +194,7 @@ class AdaptiveBaseline:
 
         if display_metrics:
             print(f'Accuracy: {accuracy}')
+            print(f'Balanced Accuracy: {bal_accuracy}')
             print(f'Precision: {precision}')
             print(f'Recall: {recall}')
             print(f'F1 Score: {f1}')
@@ -204,6 +206,7 @@ class AdaptiveBaseline:
 
         return {
             "Accuracy": round(accuracy, 3),
+            "Balanced Accuracy": round(bal_accuracy, 3),
             "Precision": round(precision, 3),
             "Recall": round(recall, 3),
             "F1 Score": round(f1, 3),

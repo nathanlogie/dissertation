@@ -8,6 +8,7 @@ def adaptive_baseline_main(datasets: list[dict], model) -> pd.DataFrame:
     all_results = []
 
     for dataset in datasets:
+        print(f"Running on {dataset['name']}")
         currAdaptive = AdaptiveBaseline(
             model=model,
             bias_metric=example_bias_metric,
