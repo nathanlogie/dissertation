@@ -52,9 +52,9 @@ def main():
         ["Batch Size"] + [col for col in results_df.columns if
                                             col not in ["Batch Size"]]]
     results_df.to_csv("batch_size_results.csv", index=False)
-    plot(results_df)
+    # plot(results_df)
     simplified_results = results_df.drop(["Dataset"], axis=1)
-    simplified_results = simplified_results.groupby(["Batch Size"]).mean().reset_index().round(3)
+    simplified_results = simplified_results.groupby(["Batch Size"]).mean().reset_index().round(4)
     simplified_results.to_csv("batch_size_simplified_results.csv")
     return results_df
 

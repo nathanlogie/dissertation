@@ -184,13 +184,8 @@ class AdaptiveBaseline:
 
         disparate_impact = metric.disparate_impact()
         statistical_parity_diff = metric.statistical_parity_difference()
-        ppv_privileged = classification_metric.positive_predictive_value(privileged=True)
-        ppv_unprivileged = classification_metric.positive_predictive_value(privileged=False)
-        ppv_parity = abs(ppv_privileged - ppv_unprivileged)
-
-        fpr_privileged = classification_metric.false_positive_rate(privileged=True)
-        fpr_unprivileged = classification_metric.false_positive_rate(privileged=False)
-        fpr_parity = abs(fpr_privileged - fpr_unprivileged)
+        average_odds_diff = classification_metric.average_odds_difference()
+        equal_opportunity_diff = classification_metric.equal_opportunity_difference()
 
         if display_metrics:
             print(f'Accuracy: {accuracy}')
@@ -201,18 +196,17 @@ class AdaptiveBaseline:
             print("Bias Metrics")
             print(f'Disparate Impact: {disparate_impact}')
             print(f'Statistical Parity Difference: {statistical_parity_diff}')
-            print(f"PPV Parity: {ppv_parity}")
-            print(f"FPR Parity: {fpr_parity}")
+            print(f'Average Odds Difference: {average_odds_diff}')
+            print(f'Equal Opportunity Difference: {equal_opportunity_diff}')
 
         return {
-            "Accuracy": round(accuracy, 3),
-            "Balanced Accuracy": round(bal_accuracy, 3),
-            "Precision": round(precision, 3),
-            "Recall": round(recall, 3),
-            "F1 Score": round(f1, 3),
-            "Disparate Impact": round(disparate_impact, 3),
-            "Statistical Parity Difference": round(statistical_parity_diff, 3),
-            "PPV Parity": round(ppv_parity, 3),
-            "FPR Parity": round(fpr_parity, 3)
+            "Accuracy": round(accuracy, 4),
+            "Balanced Accuracy": round(bal_accuracy, 4),
+            "Precision": round(precision, 4),
+            "Recall": round(recall, 4),
+            "F1 Score": round(f1, 4),
+            "Disparate Impact": round(disparate_impact, 4),
+            "Statistical Parity Difference": round(statistical_parity_diff, 4),
+            "Average Odds Difference": round(average_odds_diff, 4),
+            "Equal Opportunity Difference": round(equal_opportunity_diff, 4)
         }
-

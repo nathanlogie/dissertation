@@ -3,8 +3,10 @@ from scipy.stats import f_oneway
 
 
 df = pd.read_csv("batch_size_results.csv")
-metrics = ["Accuracy", "Precision", "Recall", "F1 Score", "Disparate Impact",
-           "Statistical Parity Difference", "PPV Parity", "FPR Parity"]
+metrics = ["Accuracy", "Balanced Accuracy", "Precision", "Recall", "F1 Score",
+           "Disparate Impact", "Statistical Parity Difference",
+           "Average Odds Difference", "Equal Opportunity Difference"]
+
 
 results = {}
 

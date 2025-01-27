@@ -1,4 +1,5 @@
 import pandas as pd
+from sklearn.linear_model import LogisticRegression
 
 from baseline.baseline import run_baseline
 
@@ -38,4 +39,18 @@ def baseline_main(datasets: list[dict], model) -> pd.DataFrame:
 
 
 if __name__ == "__main__":
-    baseline_main()
+    adjusted_datasets = [
+        {"name": "Income Census", "filepath": "../datasets/processed_datasets/adult.csv",
+         "sensitive_attribute": "sex",
+         "target_column": "income"},
+        {"name": "German Credit", "filepath": "../datasets/processed_datasets/german_credit.csv",
+         "sensitive_attribute": "age",
+         "target_column": "credit_risk"},
+        {"name": "Recidivism Compass", "filepath": "../datasets/processed_datasets/compass.csv",
+         "sensitive_attribute": "race",
+         "target_column": "two_year_recid"}
+    ]
+    baseline_main(
+        datasets=adjusted_datasets,
+        model=LogisticRegression(solver='liblinear', random_state=1)
+    )
