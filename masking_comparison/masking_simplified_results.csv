@@ -1,4 +1,4 @@
-Masking Value,Accuracy,Balanced Accuracy,Precision,Recall,F1 Score,Disparate Impact,Statistical Parity Difference,PPV Parity,FPR Parity
--1,0.767,0.706,0.745,0.773,0.751,0.691,-0.132,0.024,0.131
-0,0.771,0.714,0.743,0.775,0.755,0.691,-0.132,0.022,0.157
-1,0.77,0.711,0.753,0.753,0.746,0.691,-0.132,0.073,0.143
+Masking Value,Accuracy,Balanced Accuracy,Precision,Recall,F1 Score,Disparate Impact,Statistical Parity Difference,Average Odds Difference,Equal Opportunity Difference
+-1,0.7666,0.7055,0.7445,0.7734,0.7507,0.6904,-0.1315,-0.0986,-0.066
+0,0.7706,0.7138,0.7432,0.7751,0.7547,0.6904,-0.1315,-0.1208,-0.0842
+1,0.7701,0.711,0.7527,0.7524,0.7458,0.6904,-0.1315,-0.1407,-0.1383

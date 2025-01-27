@@ -1,13 +1,13 @@
-Run Type,Dataset,Accuracy,Balanced Accuracy,Precision,Recall,F1 Score,Disparate Impact,Statistical Parity Difference,PPV Parity,FPR Parity,Model
-Adaptive Masking,German Credit,0.78,0.699,0.804,0.904,0.851,0.881,-0.085,0.023,0.153,Logistic Regression
-Baseline,German Credit,0.75,0.675,0.797,0.862,0.828,0.789,-0.154,0.158,0.012,Logistic Regression
-Adaptive Masking,German Credit,0.747,0.632,0.763,0.923,0.835,0.881,-0.085,0.022,0.184,Random Forest
-Baseline,German Credit,0.73,0.626,0.765,0.886,0.821,0.789,-0.154,0.138,0.102,Random Forest
-Adaptive Masking,Income Census,0.848,0.791,0.708,0.676,0.691,0.359,-0.204,0.055,0.114,Logistic Regression
-Baseline,Income Census,0.847,0.768,0.728,0.611,0.665,0.385,-0.191,0.02,0.075,Logistic Regression
-Adaptive Masking,Income Census,0.836,0.763,0.697,0.616,0.654,0.359,-0.204,0.011,0.097,Random Forest
-Baseline,Income Census,0.84,0.771,0.698,0.631,0.663,0.385,-0.191,0.01,0.095,Random Forest
-Adaptive Masking,Recidivism Compass,0.684,0.667,0.681,0.814,0.742,0.832,-0.106,0.019,0.272,Logistic Regression
-Baseline,Recidivism Compass,0.676,0.666,0.683,0.763,0.721,0.817,-0.114,0.017,0.221,Logistic Regression
-Adaptive Masking,Recidivism Compass,0.658,0.65,0.682,0.724,0.703,0.832,-0.106,0.044,0.151,Random Forest
-Baseline,Recidivism Compass,0.644,0.64,0.673,0.685,0.679,0.817,-0.114,0.029,0.201,Random Forest
+Run Type,Dataset,Accuracy,Balanced Accuracy,Precision,Recall,F1 Score,Disparate Impact,Statistical Parity Difference,Average Odds Difference,Equal Opportunity Difference,Model
+Adaptive Masking,German Credit,0.78,0.6994,0.8043,0.9043,0.8514,0.8806,-0.0853,-0.1122,-0.0715,Logistic Regression
+Baseline,German Credit,0.75,0.6754,0.7974,0.8619,0.8284,0.7891,-0.154,-0.0518,-0.116,Logistic Regression
+Adaptive Masking,German Credit,0.7467,0.6321,0.7628,0.9234,0.8355,0.8806,-0.0853,-0.1081,-0.032,Random Forest
+Baseline,German Credit,0.73,0.6262,0.7654,0.8857,0.8212,0.7891,-0.154,-0.123,-0.1444,Random Forest
+Adaptive Masking,Income Census,0.8479,0.7909,0.708,0.6757,0.6915,0.359,-0.2036,-0.1229,-0.1316,Logistic Regression
+Baseline,Income Census,0.8465,0.7678,0.7284,0.611,0.6646,0.3852,-0.1906,-0.0885,-0.1023,Logistic Regression
+Adaptive Masking,Income Census,0.8358,0.763,0.6974,0.6161,0.6543,0.359,-0.2036,-0.0814,-0.0654,Random Forest
+Baseline,Income Census,0.8404,0.7706,0.6984,0.6314,0.6632,0.3852,-0.1906,-0.0955,-0.0958,Random Forest
+Adaptive Masking,Recidivism Compass,0.6841,0.6671,0.6812,0.8144,0.7419,0.8315,-0.1056,-0.2063,-0.1404,Logistic Regression
+Baseline,Recidivism Compass,0.6758,0.6662,0.6835,0.7628,0.721,0.8173,-0.1142,-0.1426,-0.0638,Logistic Regression
+Adaptive Masking,Recidivism Compass,0.6582,0.6496,0.6823,0.7241,0.7026,0.8315,-0.1056,-0.1142,-0.0771,Random Forest
+Baseline,Recidivism Compass,0.6443,0.6399,0.6733,0.6846,0.6789,0.8173,-0.1142,-0.1423,-0.0837,Random Forest
