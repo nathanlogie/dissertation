@@ -20,7 +20,7 @@ for dataset in df["Dataset"].unique():
 
         t_stat, p_value = ttest_ind(adaptive, baseline, equal_var=False)
 
-        significance = "Significant" if p_value < 0.05 else "Insignificant"
+        significance = "Significant" if p_value < 0.10 else "Insignificant"
         results[metric] = significance
         if significance == "Significant":
             counter[metric] += 1

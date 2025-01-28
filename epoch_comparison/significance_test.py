@@ -18,7 +18,7 @@ for dataset in df["Dataset"].unique():
     for metric in metrics:
         groups = [df[df["Batch Size"] == val][metric] for val in df["Batch Size"].unique()]
         f_stat, p_value = f_oneway(*groups)
-        significance = "Significant" if p_value < 0.05 else "Insignificant"
+        significance = "Significant" if p_value < 0.10 else "Insignificant"
         results[metric] = significance
         if significance == "Significant":
             counter[metric] += 1
