@@ -9,13 +9,20 @@ metrics = ["Accuracy", "Balanced Accuracy", "Precision", "Recall", "F1 Score",
 
 
 results = {}
+counter = {metric : 0 for metric in metrics}
 
-for metric in metrics:
-    groups = [df[df["Batch Size"] == val][metric] for val in df["Batch Size"].unique()]
-    f_stat, p_value = f_oneway(*groups)
-    significance = "Significant" if p_value < 0.05 else "Insignificant"
-    results[metric] = significance
+for dataset in df["Dataset"].unique():
+    curr = df[df["Dataset"] == dataset]
+    results = {}
+    print(dataset)
+    for metric in metrics:
+        groups = [df[df["Batch Size"] == val][metric] for val in df["Batch Size"].unique()]
+        f_stat, p_value = f_oneway(*groups)
+        significance = "Significant" if p_value < 0.05 else "Insignificant"
+        results[metric] = significance
+        if significance == "Significant":
+            counter[metric] += 1
 
 # Print results
-for metric, significance in results.items():
-    print(f"{metric}: {significance}")
+for metric, count in counter.items():
+    print(f"{metric}: {count}")

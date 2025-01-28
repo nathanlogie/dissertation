@@ -19,8 +19,8 @@ class AdaptiveBaseline:
 
     def __init__(self, model: Union[LogisticRegression, RandomForestClassifier], bias_metric: Callable,
                  threshold: float, sensitive_attribute: str,
-                 batching: Callable[[pd.DataFrame, str, str, int], list] = batching_strats[-1],
-                 mask: int = 0, num_batches: int = 96) -> None:
+                 batching_function: Callable[[pd.DataFrame, str, str, int], list] = batching_strats[-1],
+                 mask: int = 0, batch_size: int = 96) -> None:
 
         """
             Parameters:
@@ -40,8 +40,8 @@ class AdaptiveBaseline:
         self.mask = mask
         self.sensitive_attribute = sensitive_attribute
         self.is_masking = False
-        self.batching = batching
-        self.num_batches = num_batches
+        self.batching = batching_function
+        self.batch_size = batch_size
 
     def predict(self, x_test: Union[np.ndarray, pd.DataFrame]) -> np.ndarray:
         return self.model.predict(x_test)
@@ -78,7 +78,7 @@ class AdaptiveBaseline:
         combined_training = pd.concat([x_train, y_train], axis=1)
         target_name = y_train.name
 
-        batches = self.batching(combined_training, target_name, self.sensitive_attribute, self.num_batches)
+        batches = self.batching(combined_training, target_name, self.sensitive_attribute, self.batch_size)
 
         train_sizes = []
         val_bias_scores = []

@@ -8,6 +8,7 @@ metrics = ["Accuracy", "Balanced Accuracy", "Precision", "Recall", "F1 Score",
            "Disparate Impact", "Statistical Parity Difference",
            "Average Odds Difference", "Equal Opportunity Difference"]
 
+counter = {metric : 0 for metric in metrics}
 
 for dataset in df["Dataset"].unique():
     curr = df[df["Dataset"] == dataset]
@@ -21,6 +22,8 @@ for dataset in df["Dataset"].unique():
 
         significance = "Significant" if p_value < 0.05 else "Insignificant"
         results[metric] = significance
+        if significance == "Significant":
+            counter[metric] += 1
 
-    for metric, significance in results.items():
-        print(f"{metric}: {significance}")
+for metric, count in counter.items():
+    print(f"{metric}: {count}")

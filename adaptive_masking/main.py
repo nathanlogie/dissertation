@@ -14,7 +14,7 @@ def adaptive_baseline_main(datasets: list[dict], model) -> pd.DataFrame:
             bias_metric=example_bias_metric,
             threshold=0.1,
             sensitive_attribute=dataset["sensitive_attribute"],
-            num_batches=15
+            batch_size=15
         )
 
         results = currAdaptive.main(

@@ -34,7 +34,7 @@ def main():
                 bias_metric=example_bias_metric,
                 threshold=0.1,
                 sensitive_attribute=dataset["sensitive_attribute"],
-                num_batches=i
+                batch_size=i
             )
 
             results = currAdaptive.main(
