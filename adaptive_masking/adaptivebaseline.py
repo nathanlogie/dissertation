@@ -13,6 +13,7 @@ from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 
 from batching_strategies.batching_strats import batching_strats
+from masking_strategies.masking_strategies import masking_strategies
 
 
 class AdaptiveBaseline:
@@ -20,7 +21,7 @@ class AdaptiveBaseline:
     def __init__(self, model: Union[LogisticRegression, RandomForestClassifier], bias_metric: Callable,
                  threshold: float, sensitive_attribute: str,
                  batching_function: Callable[[pd.DataFrame, str, str, int], list] = batching_strats[-1],
-                 mask: int = 0, batch_size: int = 96) -> None:
+                 mask: int = 0, batch_size: int = 96, masking_strategy = masking_strategies[0]) -> None:
 
         """
             Parameters:
@@ -42,6 +43,7 @@ class AdaptiveBaseline:
         self.is_masking = False
         self.batching = batching_function
         self.batch_size = batch_size
+        self.masking_strategy = masking_strategy
 
     def predict(self, x_test: Union[np.ndarray, pd.DataFrame]) -> np.ndarray:
         return self.model.predict(x_test)
@@ -142,10 +144,7 @@ class AdaptiveBaseline:
             plt.show()
 
     def masking(self, x_data: Union[np.ndarray, pd.DataFrame]) -> Union[np.ndarray, pd.DataFrame]:
-        masked_data = x_data.copy()
-        if self.sensitive_attribute in masked_data.columns:
-            masked_data[self.sensitive_attribute] = self.mask
-        return masked_data
+        return self.masking_strategy(x_data, self.sensitive_attribute, self.mask)
 
     def main(self, filepath: str, sensitive_attribute: str, target_column: str,
              display_metrics: bool = False, show_plots: bool = False) -> dict:
