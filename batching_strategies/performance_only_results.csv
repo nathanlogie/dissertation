@@ -1,0 +1,10 @@
+Dataset,Batch Selection Strategy,Accuracy,Balanced Accuracy,Precision,Recall,F1 Score
+German Credit,batch_by_correlation,0.78,0.7025,0.8069,0.8995,0.8507
+German Credit,batch_by_similarity,0.78,0.6963,0.8017,0.9091,0.852
+German Credit,random_batching,0.78,0.7025,0.8069,0.8995,0.8507
+Income Census,batch_by_correlation,0.8489,0.7539,0.7771,0.5622,0.6524
+Income Census,batch_by_similarity,0.8495,0.7706,0.746,0.6113,0.672
+Income Census,random_batching,0.8492,0.7725,0.7409,0.6179,0.6738
+Recidivism Compass,batch_by_correlation,0.6818,0.6683,0.688,0.7854,0.7335
+Recidivism Compass,batch_by_similarity,0.6799,0.6634,0.6792,0.807,0.7376
+Recidivism Compass,random_batching,0.6827,0.6664,0.6818,0.8078,0.7395

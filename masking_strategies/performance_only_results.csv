@@ -1,0 +1,7 @@
+Dataset,Masking Strategy,Accuracy,Balanced Accuracy,Precision,Recall,F1 Score
+German Credit,baseline_masking,0.78,0.7025,0.8069,0.8995,0.8507
+German Credit,expanded_masking,0.78,0.7025,0.8069,0.8995,0.8507
+Income Census,baseline_masking,0.8492,0.7725,0.7409,0.6179,0.6738
+Income Census,expanded_masking,0.8492,0.7725,0.7409,0.6179,0.6738
+Recidivism Compass,baseline_masking,0.6827,0.6664,0.6818,0.8078,0.7395
+Recidivism Compass,expanded_masking,0.6827,0.6664,0.6818,0.8078,0.7395

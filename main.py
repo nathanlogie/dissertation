@@ -44,9 +44,21 @@ def main():
     print(combined_results_df)
     combined_results_df.to_csv("combined_results.csv", index=False)
 
-    simplified_results = combined_results_df.drop(["Dataset"], axis=1)
-    simplified_results = simplified_results.groupby(["Model", "Run Type"]).mean().reset_index().round(4)
-    simplified_results.to_csv("simplified_combined_results.csv", index=False)
+    bias_results = combined_results_df[[
+        col for col in combined_results_df.columns if col not in
+                                             ["Accuracy", "Balanced Accuracy", "Precision", "Recall", "F1 Score"]
+    ]
+    ]
+    bias_results.to_csv("bias_only_combined_results.csv", index=False)
+
+    performance_results = combined_results_df[[
+        col for col in combined_results_df.columns if col not in
+                                             ["Disparate Impact", "Statistical Parity Difference",
+                                              "Average Odds Difference", "Equal Opportunity Difference"]
+    ]
+    ]
+    performance_results.to_csv("performance_only_combined_results.csv", index=False)
+    return combined_results_df
 
 
 if __name__ == "__main__":

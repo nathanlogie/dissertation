@@ -123,10 +123,10 @@ def batch_by_similarity(training_data, target, sensitive_attribute, batch_size) 
     return sorted_batches
 
 
-def no_batching(training_data, target, sensitive_attribute, batch_size):
+def random_batching(training_data, target, sensitive_attribute, batch_size):
     epochs = int(len(training_data) / batch_size)
     return np.array_split(training_data, epochs)
 
 
-batching_strats = [batch_equal_sensitive, batch_demographic_parity, batch_by_correlation, batch_by_similarity,
-                   no_batching]
+batching_strats = [batch_by_correlation, batch_by_similarity,
+                   random_batching]

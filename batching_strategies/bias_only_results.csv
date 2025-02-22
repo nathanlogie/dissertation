@@ -1,0 +1,10 @@
+Dataset,Batch Selection Strategy,Disparate Impact,Statistical Parity Difference,Average Odds Difference,Equal Opportunity Difference
+German Credit,batch_by_correlation,0.8806,-0.0853,-0.1467,-0.0971
+German Credit,batch_by_similarity,0.8806,-0.0853,-0.1224,-0.0774
+German Credit,random_batching,0.8806,-0.0853,-0.1019,-0.0656
+Income Census,batch_by_correlation,0.359,-0.2036,-0.0228,0.0047
+Income Census,batch_by_similarity,0.359,-0.2036,-0.066,-0.0562
+Income Census,random_batching,0.359,-0.2036,-0.072,-0.0639
+Recidivism Compass,batch_by_correlation,0.8315,-0.1056,-0.0543,-0.0265
+Recidivism Compass,batch_by_similarity,0.8315,-0.1056,-0.177,-0.1175
+Recidivism Compass,random_batching,0.8315,-0.1056,-0.1886,-0.1232
