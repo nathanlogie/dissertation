@@ -1,0 +1,9 @@
+Run Type,Dataset,Accuracy,Balanced Accuracy,Precision,Recall,F1 Score,Disparate Impact,Statistical Parity Difference,Average Odds Difference,Equal Opportunity Difference
+Adversarial Debiasing,German Credit,0.705,0.5,0.705,1.0,0.827,1.0,0.0,0.0,0.0
+LFR,German Credit,0.6367,0.5097,0.7016,0.8325,0.7615,0.8806,-0.0853,0.0146,-0.0463
+Prejudice Remover,German Credit,0.735,0.6396,0.7785,0.8723,0.8227,0.6227,-0.3198,-0.2568,-0.2995
+Adversarial Debiasing,Income Census,0.8387,0.7448,0.7546,0.5516,0.6373,0.5898,-0.0885,0.0698,0.1499
+LFR,Income Census,0.7756,0.6215,0.6075,0.3107,0.4111,0.359,-0.2036,0.0069,0.0241
+Prejudice Remover,Income Census,0.8498,0.7698,0.7614,0.6052,0.6743,0.2725,-0.193,-0.1036,-0.1304
+Adversarial Debiasing,Recidivism Compass,0.6625,0.6521,0.6552,0.7876,0.7154,0.7646,-0.1802,-0.1607,-0.1039
+Prejudice Remover,Recidivism Compass,0.6736,0.6654,0.6711,0.7722,0.7181,0.6935,-0.2378,-0.2159,-0.1616

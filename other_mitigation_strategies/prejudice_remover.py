@@ -7,7 +7,7 @@ from aif360.datasets import StandardDataset, BinaryLabelDataset
 from aif360.metrics import BinaryLabelDatasetMetric, ClassificationMetric
 from sklearn.metrics import accuracy_score, balanced_accuracy_score, precision_score, recall_score, f1_score
 
-def main(filepath, sensitive_attribute, target_column):
+def prejudice_main(filepath, sensitive_attribute, target_column):
     data = pd.read_csv(filepath)
     train_data, test_data = train_test_split(data, test_size=0.2, random_state=1)
 
@@ -78,7 +78,7 @@ if __name__ == "__main__":
     total = []
     for dataset in datasets:
         print(f"Running on {dataset[3]}")
-        curr = main(dataset[0], dataset[1], dataset[2])
+        curr = prejudice_main(dataset[0], dataset[1], dataset[2])
 
         curr_df = pd.DataFrame([curr])
         curr_df["Dataset"] = dataset[3]
