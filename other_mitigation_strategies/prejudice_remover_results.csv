@@ -1,0 +1,4 @@
+Accuracy,Balanced Accuracy,Precision,Recall,F1 Score,Disparate Impact,Statistical Parity Difference,Average Odds Difference,Equal Opportunity Difference,Dataset,Run Type
+0.8498,0.7698,0.7614,0.6052,0.6743,0.2725,-0.193,-0.1036,-0.1304,Income Census,Prejudice Remover
+0.735,0.6396,0.7785,0.8723,0.8227,0.6227,-0.3198,-0.2568,-0.2995,German Credit,Prejudice Remover
+0.6736,0.6654,0.6711,0.7722,0.7181,0.6935,-0.2378,-0.2159,-0.1616,Recidivism Compass,Prejudice Remover

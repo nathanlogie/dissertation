@@ -169,7 +169,8 @@ class AdaptiveBaseline:
         dataset_predicted = BinaryLabelDataset(df=X_test_pred, label_names=[target_column],
                                                protected_attribute_names=[sensitive_attribute])
 
-        metric = BinaryLabelDatasetMetric(dataset_true, privileged_groups=[{sensitive_attribute: 1}],
+
+        metric = BinaryLabelDatasetMetric(dataset_predicted, privileged_groups=[{sensitive_attribute: 1}],
                                           unprivileged_groups=[{sensitive_attribute: 0}])
         classification_metric = ClassificationMetric(dataset_true, dataset_predicted,
                                                      privileged_groups=[{sensitive_attribute: 1}],
