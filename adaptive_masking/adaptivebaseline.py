@@ -175,7 +175,6 @@ class AdaptiveBaseline:
         classification_metric = ClassificationMetric(dataset_true, dataset_predicted,
                                                      privileged_groups=[{sensitive_attribute: 1}],
                                                      unprivileged_groups=[{sensitive_attribute: 0}])
-
         accuracy = accuracy_score(y_test, y_pred)
         bal_accuracy = balanced_accuracy_score(y_test, y_pred)
         precision = precision_score(y_test, y_pred, zero_division=1)

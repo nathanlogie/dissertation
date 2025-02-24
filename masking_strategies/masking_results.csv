@@ -1,7 +1,7 @@
 Dataset,Masking Strategy,Accuracy,Balanced Accuracy,Precision,Recall,F1 Score,Disparate Impact,Statistical Parity Difference,Average Odds Difference,Equal Opportunity Difference
-German Credit,baseline_masking,0.78,0.7025,0.8069,0.8995,0.8507,0.8806,-0.0853,-0.1019,-0.0656
-German Credit,expanded_masking,0.78,0.7025,0.8069,0.8995,0.8507,0.8806,-0.0853,-0.1019,-0.0656
-Income Census,baseline_masking,0.8492,0.7725,0.7409,0.6179,0.6738,0.359,-0.2036,-0.072,-0.0639
-Income Census,expanded_masking,0.8492,0.7725,0.7409,0.6179,0.6738,0.359,-0.2036,-0.072,-0.0639
-Recidivism Compass,baseline_masking,0.6827,0.6664,0.6818,0.8078,0.7395,0.8315,-0.1056,-0.1886,-0.1232
-Recidivism Compass,expanded_masking,0.6827,0.6664,0.6818,0.8078,0.7395,0.8315,-0.1056,-0.1886,-0.1232
+German Credit,baseline_masking,0.78,0.7025,0.8069,0.8995,0.8507,0.8441,-0.1251,-0.1019,-0.0656
+German Credit,expanded_masking,0.78,0.7025,0.8069,0.8995,0.8507,0.8441,-0.1251,-0.1019,-0.0656
+Income Census,baseline_masking,0.8492,0.7725,0.7409,0.6179,0.6738,0.3145,-0.1849,-0.072,-0.0639
+Income Census,expanded_masking,0.8492,0.7725,0.7409,0.6179,0.6738,0.3145,-0.1849,-0.072,-0.0639
+Recidivism Compass,baseline_masking,0.6827,0.6664,0.6818,0.8078,0.7395,0.7372,-0.2099,-0.1886,-0.1232
+Recidivism Compass,expanded_masking,0.6827,0.6664,0.6818,0.8078,0.7395,0.7372,-0.2099,-0.1886,-0.1232

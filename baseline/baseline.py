@@ -55,7 +55,7 @@ def run_baseline(filepath: str, sensitive_attribute: str, target_column: str,
                                            label_names=[target_column],
                                            protected_attribute_names=[sensitive_attribute])
 
-    metric = BinaryLabelDatasetMetric(dataset_true,
+    metric = BinaryLabelDatasetMetric(dataset_predicted,
                                       privileged_groups=[{sensitive_attribute: 1}],
                                       unprivileged_groups=[{sensitive_attribute: 0}])
 
