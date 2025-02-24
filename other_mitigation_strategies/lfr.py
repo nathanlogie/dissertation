@@ -2,7 +2,7 @@ import pandas as pd
 from aif360.algorithms.preprocessing import LFR
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, balanced_accuracy_score
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 from aif360.metrics import BinaryLabelDatasetMetric, ClassificationMetric
@@ -37,12 +37,7 @@ def run_with_lfr(filepath: str, sensitive_attribute: str, target_column: str, di
     X_train_transformed = train_dataset_transformed.features
     y_train_transformed = train_dataset_transformed.labels.ravel()
 
-    print(f"Classes in y_train_transformed: {set(y_train_transformed)}")
-    if len(set(y_train_transformed)) < 2:
-        raise ValueError("Training data must contain at least two classes")
-
     X_test_transformed = test_dataset_transformed.features
-    y_test_transformed = test_dataset_transformed.labels.ravel()
 
     model = make_pipeline(StandardScaler(), LogisticRegression(solver='liblinear', random_state=1))
     model.fit(X_train_transformed, y_train_transformed)
@@ -51,6 +46,7 @@ def run_with_lfr(filepath: str, sensitive_attribute: str, target_column: str, di
     y_test_transformed = y_test.to_numpy()
 
     accuracy = accuracy_score(y_test_transformed, y_pred)
+    bal_accuracy = balanced_accuracy_score(y_test_transformed, y_pred)
     precision = precision_score(y_test_transformed, y_pred)
     recall = recall_score(y_test_transformed, y_pred)
     f1 = f1_score(y_test_transformed, y_pred)
@@ -80,35 +76,17 @@ def run_with_lfr(filepath: str, sensitive_attribute: str, target_column: str, di
     disparate_impact = metric.disparate_impact()
     statistical_parity_diff = metric.statistical_parity_difference()
 
-    ppv_privileged = classification_metric.positive_predictive_value(privileged=True)
-    ppv_unprivileged = classification_metric.positive_predictive_value(privileged=False)
-    ppv_parity = abs(ppv_privileged - ppv_unprivileged)
+    average_odds_diff = classification_metric.average_odds_difference()
+    equal_opportunity_diff = classification_metric.equal_opportunity_difference()
 
-    fpr_privileged = classification_metric.false_positive_rate(privileged=True)
-    fpr_unprivileged = classification_metric.false_positive_rate(privileged=False)
-    fpr_parity = abs(fpr_privileged - fpr_unprivileged)
-
-    if display_metrics:
-        print(f'Accuracy: {accuracy}')
-        print(f'Precision: {precision}')
-        print(f'Recall: {recall}')
-        print(f'F1 Score: {f1}')
-
-        print("Bias Metrics")
-        print(f'Disparate Impact: {disparate_impact}')
-        print(f'Statistical Parity Difference: {statistical_parity_diff}')
-        print(f"PPV Parity: {ppv_parity}")
-        print(f"FPR Parity: {fpr_parity}")
-
-    results = {
-        "Accuracy": accuracy,
-        "Precision": precision,
-        "Recall": recall,
-        "F1 Score": f1,
-        "Disparate Impact": disparate_impact,
-        "Statistical Parity Difference": statistical_parity_diff,
-        "PPV Parity": ppv_parity,
-        "FPR Parity": fpr_parity
+    return {
+        "Accuracy": round(accuracy, 4),
+        "Balanced Accuracy": round(bal_accuracy, 4),
+        "Precision": round(precision, 4),
+        "Recall": round(recall, 4),
+        "F1 Score": round(f1, 4),
+        "Disparate Impact": round(disparate_impact, 4),
+        "Statistical Parity Difference": round(statistical_parity_diff, 4),
+        "Average Odds Difference": round(average_odds_diff, 4),
+        "Equal Opportunity Difference": round(equal_opportunity_diff, 4)
     }
-
-    return results
