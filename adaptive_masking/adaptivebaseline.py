@@ -21,7 +21,7 @@ class AdaptiveBaseline:
     def __init__(self, model: Union[LogisticRegression, RandomForestClassifier], bias_metric: Callable,
                  threshold: float, sensitive_attribute: str,
                  batching_function: Callable[[pd.DataFrame, str, str, int], list] = batching_strats[-1],
-                 mask: int = 0, batch_size: int = 96, masking_strategy = masking_strats[0]) -> None:
+                 mask: int = -1, batch_size: int = 96, masking_strategy = masking_strats[0]) -> None:
 
         """
             Parameters:

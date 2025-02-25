@@ -53,11 +53,11 @@ for i, (ax, (dataset_name, sensitive_attr, correlations)) in enumerate(zip(axes,
         annot=True,
         fmt='.3f',  # Format numbers to 3 decimal places
         cmap="coolwarm",
-        vmin=0, vmax=1,  # Pearson correlation absolute values
+        vmin=0, vmax=max(correlations[:-2]),  # Pearson correlation absolute values
         xticklabels=[sensitive_attr],
         yticklabels=[f"{name}" for name in correlations.index],  # Add the attribute name on the left
         cbar=False,
-        linewidths=0.5,
+        linewidths=1.5,
         linecolor='black',
         ax=ax,
         square=True  # Ensure the heatmap cells are square
@@ -66,7 +66,8 @@ for i, (ax, (dataset_name, sensitive_attr, correlations)) in enumerate(zip(axes,
     ax.set_xticklabels(ax.get_xticklabels(), fontsize=10, fontweight='bold', color='black')
     ax.set_yticklabels(ax.get_yticklabels(), fontsize=8, fontweight='bold', rotation=0, color='black')
 
-plt.tight_layout()
-plt.savefig('heatmaps.png', dpi=300)
+plt.tight_layout()  # Adjust layout before saving
+plt.gcf().tight_layout()  # Recalculate tight layout before saving
+plt.savefig('heatmaps.png', dpi=300, bbox_inches='tight')  # Save with tight bounding box
 
 plt.show()
