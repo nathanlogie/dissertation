@@ -1,7 +1,13 @@
-Dataset,Masking Strategy,Accuracy,Balanced Accuracy,Precision,Recall,F1 Score
-German Credit,baseline_masking,0.78,0.7025,0.8069,0.8995,0.8507
-German Credit,expanded_masking,0.78,0.7025,0.8069,0.8995,0.8507
-Income Census,baseline_masking,0.8492,0.7725,0.7409,0.6179,0.6738
-Income Census,expanded_masking,0.8492,0.7725,0.7409,0.6179,0.6738
-Recidivism Compass,baseline_masking,0.6827,0.6664,0.6818,0.8078,0.7395
-Recidivism Compass,expanded_masking,0.6827,0.6664,0.6818,0.8078,0.7395
+Dataset,Model,Masking Strategy,Accuracy,Balanced Accuracy,Precision,Recall,F1 Score
+German Credit,Logistic Regression,baseline_masking,0.7767,0.7032,0.8087,0.89,0.8474
+German Credit,Logistic Regression,create_expanded_masking_strat,0.7667,0.6836,0.7957,0.8947,0.8423
+German Credit,Random Forest,baseline_masking,0.7533,0.6368,0.7647,0.933,0.8405
+German Credit,Random Forest,create_expanded_masking_strat,0.76,0.6571,0.7773,0.9187,0.8421
+Income Census,Logistic Regression,baseline_masking,0.8493,0.7617,0.762,0.585,0.6619
+Income Census,Logistic Regression,create_expanded_masking_strat,0.8311,0.6963,0.819,0.4242,0.5589
+Income Census,Random Forest,baseline_masking,0.8437,0.768,0.7237,0.6152,0.6651
+Income Census,Random Forest,create_expanded_masking_strat,0.8349,0.7425,0.7251,0.5561,0.6295
+Recidivism Compass,Logistic Regression,baseline_masking,0.6739,0.6517,0.6628,0.8451,0.7429
+Recidivism Compass,Logistic Regression,create_expanded_masking_strat,0.6679,0.6498,0.6671,0.807,0.7304
+Recidivism Compass,Random Forest,baseline_masking,0.66,0.6444,0.6667,0.7804,0.7191
+Recidivism Compass,Random Forest,create_expanded_masking_strat,0.6614,0.6545,0.6893,0.715,0.7019

@@ -27,6 +27,23 @@ def expanded_masking(x_data: Union[np.ndarray, pd.DataFrame], sensitive_attribut
 
     return masked_data
 
-masking_strats = [baseline_masking, expanded_masking]
 
 
+def create_expanded_masking_strat(threshold: float):
+    def expanded_masking(x_data: Union[np.ndarray, pd.DataFrame], sensitive_attribute: str, mask: int) -> Union[np.ndarray, pd.DataFrame]:
+        masked_data = x_data.copy()
+        if sensitive_attribute in masked_data.columns:
+            corr_matrix = masked_data.corr().abs()
+
+            correlated_features = corr_matrix[sensitive_attribute][corr_matrix[sensitive_attribute] >= threshold].index.tolist()
+
+            for feature in correlated_features:
+                masked_data[feature] = mask
+
+            masked_data[sensitive_attribute] = mask
+
+        return masked_data
+
+    return expanded_masking
+
+masking_strats = [baseline_masking, create_expanded_masking_strat]
