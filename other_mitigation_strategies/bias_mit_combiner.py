@@ -7,7 +7,8 @@ from sklearn.utils._testing import ignore_warnings
 from other_mitigation_strategies.adverserial import adversarial_main
 from other_mitigation_strategies.lfr import run_with_lfr
 from other_mitigation_strategies.prejudice_remover import prejudice_main
-
+from adaptive_masking.main import adaptive_baseline_main
+from baseline.main import baseline_main
 @ignore_warnings(category=ConvergenceWarning)
 def main():
     warnings.filterwarnings("ignore")
@@ -20,7 +21,9 @@ def main():
     bias_mitigation_strategies = [
         ("Adversarial Debiasing",adversarial_main),
         ("Prejudice Remover",prejudice_main),
-        ("LFR", run_with_lfr)
+        ("LFR", run_with_lfr),
+        ("Adaptive Masking", adaptive_baseline_main),
+        ("Baseline", baseline_main)
     ]
 
     total = []
