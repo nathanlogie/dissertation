@@ -1,13 +1,13 @@
 Dataset,Model,Masking Strategy,Accuracy,Bal. Acc.,Prec.,Rec.,F1 Score
-German Credit,LR,Baseline,0.7767,0.7032,0.8087,0.89,0.8474
+German Credit,LR,Baseline,0.7767,0.7032,0.8087,0.8900,0.8474
 German Credit,LR,Expanded,0.7667,0.6836,0.7957,0.8947,0.8423
-German Credit,RF,Baseline,0.7533,0.6368,0.7647,0.933,0.8405
-German Credit,RF,Expanded,0.76,0.6571,0.7773,0.9187,0.8421
-Income Census,LR,Baseline,0.8493,0.7617,0.762,0.585,0.6619
-Income Census,LR,Expanded,0.8311,0.6963,0.819,0.4242,0.5589
-Income Census,RF,Baseline,0.8437,0.768,0.7237,0.6152,0.6651
+German Credit,RF,Baseline,0.7533,0.6368,0.7647,0.9330,0.8405
+German Credit,RF,Expanded,0.7600,0.6571,0.7773,0.9187,0.8421
+Income Census,LR,Baseline,0.8493,0.7617,0.7620,0.5850,0.6619
+Income Census,LR,Expanded,0.8311,0.6963,0.8190,0.4242,0.5589
+Income Census,RF,Baseline,0.8437,0.7680,0.7237,0.6152,0.6651
 Income Census,RF,Expanded,0.8349,0.7425,0.7251,0.5561,0.6295
 Recidivism Compass,LR,Baseline,0.6739,0.6517,0.6628,0.8451,0.7429
-Recidivism Compass,LR,Expanded,0.6679,0.6498,0.6671,0.807,0.7304
-Recidivism Compass,RF,Baseline,0.66,0.6444,0.6667,0.7804,0.7191
-Recidivism Compass,RF,Expanded,0.6614,0.6545,0.6893,0.715,0.7019
+Recidivism Compass,LR,Expanded,0.6679,0.6498,0.6671,0.8070,0.7304
+Recidivism Compass,RF,Baseline,0.6600,0.6444,0.6667,0.7804,0.7191
+Recidivism Compass,RF,Expanded,0.6614,0.6545,0.6893,0.7150,0.7019
