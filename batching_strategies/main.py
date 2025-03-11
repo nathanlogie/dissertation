@@ -6,7 +6,8 @@ from sklearn.linear_model import LogisticRegression
 
 from adaptive_masking.adaptivebaseline import AdaptiveBaseline
 from adaptive_masking.bias_metrics import example_bias_metric
-from batching_strategies.batching_strats import batching_strats
+from batching_strategies.batching_strats import batching_strats, batching_names
+
 
 def main():
     warnings.simplefilter(action='ignore', category=FutureWarning)
@@ -24,13 +25,13 @@ def main():
     ]
     all_results = []
     models = [
-        ("Logistic Regression", LogisticRegression(solver='liblinear', random_state=1)),
-        ("Random Forest", RandomForestClassifier(random_state=1))
+        ("LR", LogisticRegression(solver='liblinear', random_state=1)),
+        ("RF", RandomForestClassifier(random_state=1))
     ]
     for model in models:
         print("Model: ", model[0])
-        for batching_strategy in batching_strats:
-            print("Batching Strategy: ", batching_strategy.__name__)
+        for batching_strategy, batching_name in zip(batching_strats, batching_names):
+            print("Batching Strategy: ", batching_name)
             for dataset in datasets:
                 print("Dataset", dataset["name"])
                 currAdaptive = AdaptiveBaseline(
@@ -48,7 +49,7 @@ def main():
                 )
 
                 results["Dataset"] = dataset["name"]
-                results["Batch Selection Strategy"] = batching_strategy.__name__
+                results["Batch Selection Strategy"] = batching_name
                 results["Model"] = model[0]
                 all_results.append(results)
 

@@ -28,8 +28,8 @@ def main():
 
     all_results = []
     models = [
-        ("Logistic Regression", LogisticRegression(solver='liblinear', random_state=1)),
-        ("Random Forest", RandomForestClassifier(random_state=1))
+        ("LR", LogisticRegression(solver='liblinear', random_state=1)),
+        ("RF", RandomForestClassifier(random_state=1))
     ]
     for model in models:
         print("Model: ", model[0])

@@ -1,13 +1,13 @@
 Run Type,Dataset,Disparate Impact,Statistical Parity Difference,Average Odds Difference,Equal Opportunity Difference,Model
-Adaptive Masking,German Credit,0.8354,-0.1335,-0.1122,-0.0715,Logistic Regression
-Baseline,German Credit,0.8474,-0.1191,-0.0518,-0.116,Logistic Regression
-Adaptive Masking,German Credit,0.8614,-0.1194,-0.118,-0.0379,Random Forest
-Baseline,German Credit,0.8049,-0.1644,-0.123,-0.1444,Random Forest
-Adaptive Masking,Income Census,0.3198,-0.1885,-0.0717,-0.0601,Logistic Regression
-Baseline,Income Census,0.3316,-0.1777,-0.0885,-0.1023,Logistic Regression
-Adaptive Masking,Income Census,0.3166,-0.1943,-0.0808,-0.0659,Random Forest
-Baseline,Income Census,0.3234,-0.1945,-0.0955,-0.0958,Random Forest
-Adaptive Masking,Recidivism Compass,0.7935,-0.1691,-0.1474,-0.0968,Logistic Regression
-Baseline,Recidivism Compass,0.7715,-0.1651,-0.1426,-0.0638,Logistic Regression
-Adaptive Masking,Recidivism Compass,0.8634,-0.0903,-0.0643,-0.0378,Random Forest
-Baseline,Recidivism Compass,0.7563,-0.1624,-0.1423,-0.0837,Random Forest
+Adaptive Masking,German Credit,0.8354,-0.1335,-0.1122,-0.0715,LR
+Baseline,German Credit,0.8474,-0.1191,-0.0518,-0.116,LR
+Adaptive Masking,German Credit,0.8614,-0.1194,-0.118,-0.0379,RF
+Baseline,German Credit,0.8049,-0.1644,-0.123,-0.1444,RF
+Adaptive Masking,Income Census,0.3198,-0.1885,-0.0717,-0.0601,LR
+Baseline,Income Census,0.3316,-0.1777,-0.0885,-0.1023,LR
+Adaptive Masking,Income Census,0.3166,-0.1943,-0.0808,-0.0659,RF
+Baseline,Income Census,0.3234,-0.1945,-0.0955,-0.0958,RF
+Adaptive Masking,Recidivism Compass,0.7935,-0.1691,-0.1474,-0.0968,LR
+Baseline,Recidivism Compass,0.7715,-0.1651,-0.1426,-0.0638,LR
+Adaptive Masking,Recidivism Compass,0.8634,-0.0903,-0.0643,-0.0378,RF
+Baseline,Recidivism Compass,0.7563,-0.1624,-0.1423,-0.0837,RF

@@ -130,3 +130,5 @@ def random_batching(training_data, target, sensitive_attribute, batch_size):
 
 batching_strats = [batch_by_correlation, batch_by_similarity,
                    random_batching]
+
+batching_names = ["Correlation-Based", "Distribution-Based", "Random"]

@@ -47,3 +47,4 @@ def create_expanded_masking_strat(threshold: float):
     return expanded_masking
 
 masking_strats = [baseline_masking, create_expanded_masking_strat]
+masking_names = ["Baseline", "Expanded"]

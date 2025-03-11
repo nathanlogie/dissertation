@@ -7,7 +7,7 @@ from sklearn.linear_model import LogisticRegression
 from adaptive_masking.adaptivebaseline import AdaptiveBaseline
 from adaptive_masking.bias_metrics import example_bias_metric
 from batching_strategies.batching_strats import batching_strats
-from masking_strategies_def import masking_strats
+from masking_strategies_def import masking_strats, masking_names
 
 
 def main():
@@ -29,13 +29,13 @@ def main():
     ]
     all_results = []
     models = [
-        ("Logistic Regression", LogisticRegression(solver='liblinear', random_state=1)),
-        ("Random Forest", RandomForestClassifier(random_state=1))
+        ("LR", LogisticRegression(solver='liblinear', random_state=1)),
+        ("RF", RandomForestClassifier(random_state=1))
     ]
     for model in models:
         print("Model: ", model[0])
-        for masking_strategy in masking_strats:
-            print("Masking Strategy: ", masking_strategy.__name__)
+        for masking_strategy, masking_name in zip(masking_strats, masking_names):
+            print("Masking Strategy: ", masking_names)
             for dataset in datasets:
                 print("Dataset", dataset["name"])
                 if masking_strategy == masking_strats[1]:
@@ -59,7 +59,7 @@ def main():
                 )
                 results["Model"] = model[0]
                 results["Dataset"] = dataset["name"]
-                results["Masking Strategy"] = masking_strategy.__name__
+                results["Masking Strategy"] = masking_name
                 all_results.append(results)
 
     results_df = pd.DataFrame(all_results)
