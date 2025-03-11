@@ -18,7 +18,7 @@ def tost_test(adaptive, baseline, epsilon=0.01):
     equiv = (lower_p < 0.05 and upper_p < 0.05)
     return equiv, lower_p, upper_p
 
-metrics = ["Accuracy", "Balanced Accuracy", "Precision", "Recall", "F1 Score",
+metrics = ["Accuracy", "Bal. Acc.", "Precision", "Recall", "F1 Score",
            "Disparate Impact", "Statistical Parity Difference",
            "Average Odds Difference", "Equal Opportunity Difference"]
 

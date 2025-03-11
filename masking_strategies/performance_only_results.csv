@@ -1,4 +1,4 @@
-Dataset,Model,Masking Strategy,Accuracy,Balanced Accuracy,Precision,Recall,F1 Score
+Dataset,Model,Masking Strategy,Accuracy,Bal. Acc.,Prec.,Rec.,F1 Score
 German Credit,LR,Baseline,0.7767,0.7032,0.8087,0.89,0.8474
 German Credit,LR,Expanded,0.7667,0.6836,0.7957,0.8947,0.8423
 German Credit,RF,Baseline,0.7533,0.6368,0.7647,0.933,0.8405

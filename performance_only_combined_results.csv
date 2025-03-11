@@ -1,4 +1,4 @@
-Run Type,Dataset,Accuracy,Balanced Accuracy,Precision,Recall,F1 Score,Model
+Run Type,Dataset,Accuracy,Bal. Acc.,Prec.,Rec.,F1 Score,Model
 Adaptive Masking,German Credit,0.78,0.6994,0.8043,0.9043,0.8514,LR
 Baseline,German Credit,0.75,0.6754,0.7974,0.8619,0.8284,LR
 Adaptive Masking,German Credit,0.76,0.6509,0.7729,0.9282,0.8435,RF

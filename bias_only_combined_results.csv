@@ -1,4 +1,4 @@
-Run Type,Dataset,Disparate Impact,Statistical Parity Difference,Average Odds Difference,Equal Opportunity Difference,Model
+Run Type,Dataset,Disp. Impact,Stat. Parity Diff.,Avg. Odds Diff.,Eq. Opp. Diff.,Model
 Adaptive Masking,German Credit,0.8354,-0.1335,-0.1122,-0.0715,LR
 Baseline,German Credit,0.8474,-0.1191,-0.0518,-0.116,LR
 Adaptive Masking,German Credit,0.8614,-0.1194,-0.118,-0.0379,RF

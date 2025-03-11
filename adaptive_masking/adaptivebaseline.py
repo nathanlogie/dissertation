@@ -188,8 +188,8 @@ class AdaptiveBaseline:
 
         if display_metrics:
             print(f'Accuracy: {accuracy}')
-            print(f'Balanced Accuracy: {bal_accuracy}')
-            print(f'Precision: {precision}')
+            print(f'Bal. Acc.: {bal_accuracy}')
+            print(f'Prec.: {precision}')
             print(f'Recall: {recall}')
             print(f'F1 Score: {f1}')
             print("Bias Metrics")
@@ -200,8 +200,8 @@ class AdaptiveBaseline:
 
         return {
             "Accuracy": round(accuracy, 4),
-            "Balanced Accuracy": round(bal_accuracy, 4),
-            "Precision": round(precision, 4),
+            "Bal. Acc.": round(bal_accuracy, 4),
+            "Prec.": round(precision, 4),
             "Recall": round(recall, 4),
             "F1 Score": round(f1, 4),
             "Disparate Impact": round(disparate_impact, 4),

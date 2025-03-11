@@ -1,4 +1,4 @@
-Run Type,Dataset,Model,Accuracy,Balanced Accuracy,Precision,Recall,F1 Score
+Run Type,Dataset,Model,Accuracy,Bal. Acc.,Prec.,Rec.,F1 Score
 Adaptive Masking,German Credit,Linear SVC,0.7733,0.6915,0.8,0.8995,0.8468
 Baseline,German Credit,Linear SVC,0.7567,0.6802,0.7991,0.8714,0.8337
 Adaptive Masking,German Credit,Logistic Regression,0.78,0.6994,0.8043,0.9043,0.8514

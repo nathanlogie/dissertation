@@ -1,4 +1,4 @@
-Dataset,Model,Masking Strategy,Disparate Impact,Statistical Parity Difference,Average Odds Difference,Equal Opportunity Difference
+Dataset,Model,Masking Strategy,Disp. Impact,Stat. Parity Diff.,Avg. Odds Diff.,Eq. Opp. Diff.
 German Credit,LR,Baseline,0.8576,-0.1125,-0.0886,-0.0538
 German Credit,LR,Expanded,0.8843,-0.0928,-0.0895,0.0033
 German Credit,RF,Baseline,0.8449,-0.1362,-0.143,-0.0437

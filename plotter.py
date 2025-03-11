@@ -7,7 +7,7 @@ data = pd.read_csv("combined_results.csv")
 df = pd.DataFrame(data)
 df['Dataset'] = pd.Categorical(df['Dataset'])
 
-metrics = ["Accuracy", "Precision", "Recall", "F1 Score",
+metrics = ["Accuracy", "Prec.", "Recall", "F1 Score",
            "Disparate Impact", "Statistical Parity Difference",
            "Average Odds Difference", "Equal Opportunity Difference"]
 plt.figure(figsize=(16, 10))

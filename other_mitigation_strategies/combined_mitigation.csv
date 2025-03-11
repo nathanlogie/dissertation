@@ -1,4 +1,4 @@
-Run Type,Dataset,Accuracy,Balanced Accuracy,Precision,Recall,F1 Score,Disparate Impact,Statistical Parity Difference,Average Odds Difference,Equal Opportunity Difference
+Run Type,Dataset,Accuracy,Bal. Acc.,Prec.,Rec.,F1 Score,Disp. Impact,Stat. Parity Diff.,Avg. Odds Diff.,Eq. Opp. Diff.
 Adversarial Debiasing,German Credit,0.705,0.5,0.705,1.0,0.827,1.0,0.0,0.0,0.0
 LFR,German Credit,0.6367,0.5097,0.7016,0.8325,0.7615,0.8806,-0.0853,0.0146,-0.0463
 Prejudice Remover,German Credit,0.735,0.6396,0.7785,0.8723,0.8227,0.6227,-0.3198,-0.2568,-0.2995

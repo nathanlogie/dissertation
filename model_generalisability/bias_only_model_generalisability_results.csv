@@ -1,4 +1,4 @@
-Run Type,Dataset,Model,Disparate Impact,Statistical Parity Difference,Average Odds Difference,Equal Opportunity Difference
+Run Type,Dataset,Model,Disp. Impact,Stat. Parity Diff.,Avg. Odds Diff.,Eq. Opp. Diff.
 Adaptive Masking,German Credit,Linear SVC,0.8354,-0.1335,-0.1166,-0.0656
 Baseline,German Credit,Linear SVC,0.8384,-0.1274,-0.0575,-0.1273
 Adaptive Masking,German Credit,Logistic Regression,0.8354,-0.1335,-0.1122,-0.0715

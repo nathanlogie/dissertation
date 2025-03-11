@@ -5,7 +5,7 @@ from scipy.stats import f_oneway
 data = read_csv("masking_results.csv")
 df = pd.DataFrame(data)
 
-metrics = ["Accuracy", "Balanced Accuracy", "Precision", "Recall", "F1 Score",
+metrics = ["Accuracy", "Bal. Acc.", "Precision", "Recall", "F1 Score",
            "Disparate Impact", "Statistical Parity Difference",
            "Average Odds Difference", "Equal Opportunity Difference"]
 

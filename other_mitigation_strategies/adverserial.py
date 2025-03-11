@@ -68,7 +68,7 @@ def adversarial_main(filepath, sensitive_attribute, target_column):
 
     return {
         "Accuracy": round(accuracy, 4),
-        "Balanced Accuracy": round(bal_accuracy, 4),
+        "Bal. Acc.": round(bal_accuracy, 4),
         "Precision": round(precision, 4),
         "Recall": round(recall, 4),
         "F1 Score": round(f1, 4),

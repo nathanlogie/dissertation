@@ -1,4 +1,4 @@
-Dataset,Model,Masking Value,Accuracy,Balanced Accuracy,Precision,Recall,F1 Score,Disparate Impact,Statistical Parity Difference,Average Odds Difference,Equal Opportunity Difference
+Dataset,Model,Masking Value,Accuracy,Bal. Acc.,Prec.,Rec.,F1 Score,Disp. Impact,Stat. Parity Diff.,Avg. Odds Diff.,Eq. Opp. Diff.
 German Credit,LR,-1,0.7767,0.7032,0.8087,0.89,0.8474,0.8576,-0.1125,-0.0886,-0.0538
 German Credit,LR,0,0.78,0.7025,0.8069,0.8995,0.8507,0.8441,-0.1251,-0.1019,-0.0656
 German Credit,LR,1,0.7867,0.7166,0.8166,0.8947,0.8539,0.7398,-0.2099,-0.1957,-0.1228

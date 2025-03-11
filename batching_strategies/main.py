@@ -61,7 +61,7 @@ def main():
 
     bias_results = results_df[[
         col for col in results_df.columns if col not in
-                                             ["Accuracy","Balanced Accuracy","Precision","Recall","F1 Score"]
+                                             ["Accuracy","Bal. Acc.","Precision","Recall","F1 Score"]
         ]
     ]
     bias_results.to_csv("bias_only_results.csv", index=False)

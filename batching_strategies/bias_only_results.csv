@@ -1,4 +1,4 @@
-Dataset,Model,Batch Selection Strategy,Disparate Impact,Statistical Parity Difference,Average Odds Difference,Equal Opportunity Difference
+Dataset,Model,Batch Selection Strategy,Disp. Impact,Stat. Parity Diff.,Avg. Odds Diff.,Eq. Opp. Diff.
 German Credit,LR,Correlation-Based,0.8441,-0.1251,-0.1019,-0.0656
 German Credit,LR,Distribution-Based,0.8311,-0.1377,-0.1195,-0.0715
 German Credit,LR,Random,0.8576,-0.1125,-0.0886,-0.0538
