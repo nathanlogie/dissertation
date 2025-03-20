@@ -6,7 +6,7 @@ import seaborn as sns
 sns.set_style("whitegrid")
 
 def main():
-    plt.style.use('seaborn-v0_8-whitegrid')
+    plt.style.use('seaborn-v0_8-white')
 
     df = pd.read_csv("significance_variance.csv")
 
