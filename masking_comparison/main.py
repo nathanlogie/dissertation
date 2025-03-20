@@ -29,7 +29,7 @@ def main():
     all_results = []
     models = [
         ("LR", LogisticRegression(solver='liblinear', random_state=1)),
-        ("RF", RandomForestClassifier(random_state=1))
+        ("RF", RandomForestClassifier(random_state=1, n_jobs=-1))
     ]
     for model in models:
         print("Model: ", model[0])
@@ -38,7 +38,7 @@ def main():
             for dataset in datasets:
                 print("Dataset", dataset["name"])
                 currAdaptive = AdaptiveBaseline(
-                    model=LogisticRegression(solver='liblinear', random_state=1),
+                    model=model[1],
                     bias_metric=example_bias_metric,
                     threshold=0.1,
                     sensitive_attribute=dataset["sensitive_attribute"],
