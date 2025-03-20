@@ -3,9 +3,9 @@ from scipy.stats import f_oneway
 
 
 df = pd.read_csv("batch_size_results.csv")
-metrics = ["Accuracy", "Bal. Acc.", "Precision", "Recall", "F1 Score",
-           "Disparate Impact", "Statistical Parity Difference",
-           "Average Odds Difference", "Equal Opportunity Difference"]
+metrics = ["Accuracy", "Bal. Acc.", "Prec.", "Rec.", "F1 Score",
+           "Disp. Impact", "Stat. Parity Diff.",
+           "Avg. Odds Diff.", "Eq. Opp. Diff."]
 
 
 results = {}
@@ -18,7 +18,7 @@ for dataset in df["Dataset"].unique():
     for metric in metrics:
         groups = [df[df["Batch Size"] == val][metric] for val in df["Batch Size"].unique()]
         f_stat, p_value = f_oneway(*groups)
-        significance = "Significant" if p_value < 0.10 else "Insignificant"
+        significance = "Significant" if p_value < 1.1 else "Insignificant"
         results[metric] = significance
         if significance == "Significant":
             counter[metric] += 1

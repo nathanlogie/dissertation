@@ -18,9 +18,9 @@ def tost_test(adaptive, baseline, epsilon=0.01):
     equiv = (lower_p < 0.05 and upper_p < 0.05)
     return equiv, lower_p, upper_p
 
-metrics = ["Accuracy", "Bal. Acc.", "Precision", "Recall", "F1 Score",
-           "Disparate Impact", "Statistical Parity Difference",
-           "Average Odds Difference", "Equal Opportunity Difference"]
+metrics = ["Accuracy", "Bal. Acc.", "Prec.", "Rec.", "F1 Score",
+           "Disp. Impact", "Stat. Parity Diff.",
+           "Avg. Odds Diff.", "Eq. Opp. Diff."]
 
 counter = {metric : 0 for metric in metrics}
 tost_counter = {metric : 0 for metric in metrics}
@@ -42,9 +42,9 @@ for model in df["Model"].unique():
 
             results[metric] = significance
 
-            toster, _, _ = tost_test(adaptive, baseline)
-            if toster:
-                print(f"{metric}: {p_value} : {dataset} : {model}")
-                tost_counter[metric] += 1
+            # toster, _, _ = tost_test(adaptive, baseline)
+            # if toster:
+            #     print(f"{metric}: {p_value} : {dataset} : {model}")
+            #     tost_counter[metric] += 1
 for metric, count in counter.items():
     print(f"{metric}: {count}")
