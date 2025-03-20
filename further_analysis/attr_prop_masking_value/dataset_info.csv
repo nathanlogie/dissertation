@@ -1,0 +1,10 @@
+Dataset,Version,n,Privileged Count,Unprivileged Count
+Income Census,equal,19564,9782,9782
+Income Census,75_privileged,27172,20379,6793
+Income Census,75_unprivileged,13040,3260,9780
+German Credit,equal,380,190,190
+German Credit,75_privileged,760,570,190
+German Credit,75_unprivileged,252,63,189
+Recidivism Compass,equal,4908,2454,2454
+Recidivism Compass,75_privileged,3272,2454,818
+Recidivism Compass,75_unprivileged,6344,1586,4758
