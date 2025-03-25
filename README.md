@@ -34,3 +34,34 @@ Both models were selected to allow for testing with two different models and bas
     - Sourced from https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html
 - Linear Regression
     - Sourced from https://scikit-learn.org/dev/modules/generated/sklearn.linear_model.LinearRegression.html
+    - 
+## Running Experiments
+
+Each experiment has a `main.py` file, which runs all the associated files with that experiment and outputs the results as a `.csv` file in the same directory. All results are already in each directory but are replaced when running the experiment anew
+
+- Comparison of Batch Selection Strategies
+    - Found in the `batching_strategies` folder, the batching strategies are defined in `batching_strats.py`
+- Comparison of Batch Sizes
+    - Found in the `epoch_comparison` folder
+- Comparison of Attribute Masking Strategies
+    - Found in the `masking_strategies` folder, masking strategies are defined in `masking_strategies_def.py`
+- Comparison of Masking Values
+- Found in the `masking_comparison` folder
+- Comparison of Adaptive Masking Across Models
+    - Found in the `model_generalisability` folder
+    - Additional Models used are
+        - SVC (Linear Kernel) - https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html
+        - XGBC Classifier - https://xgboost.readthedocs.io/en/stable/
+        - MLP Classifier - [https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html](https://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPClassifier.html)
+- Comparison of Adaptive Masking against Other Mitigation Strategies
+    - Found in the other_mitigation strategies folder
+    - Other mitigation strategies used include
+        - LFR
+            - https://aif360.readthedocs.io/en/stable/modules/generated/aif360.algorithms.preprocessing.LFR.html#aif360.algorithms.preprocessing.LFR
+            - https://proceedings.mlr.press/v28/zemel13.html
+        - Prejudice Remover
+            - https://aif360.readthedocs.io/en/stable/modules/generated/aif360.algorithms.inprocessing.PrejudiceRemover.html#aif360.algorithms.inprocessing.PrejudiceRemover
+            - https://link.springer.com/chapter/10.1007/978-3-642-33486-3_3
+        - Adversarial Debiasing
+            - https://aif360.readthedocs.io/en/stable/modules/generated/aif360.algorithms.inprocessing.AdversarialDebiasing.html#aif360.algorithms.inprocessing.AdversarialDebiasing
+            - https://dl.acm.org/doi/10.1145/3278721.3278779
