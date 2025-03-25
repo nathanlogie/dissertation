@@ -34,7 +34,13 @@ Both models were selected to allow for testing with two different models and bas
     - Sourced from https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html
 - Linear Regression
     - Sourced from https://scikit-learn.org/dev/modules/generated/sklearn.linear_model.LinearRegression.html
-    - 
+
+## Adaptive Masking and Baseline
+
+The adaptive masking class is defined in the `adaptive_masking` folder with the `adaptivebaseline.py` file defining the class itself, `bias_metrics.py` defining the metric used in the evaluation, and `main.py` providing a function to run and evaluate adaptive masking on a given dataset/model
+
+The baseline is defined in the `baseline` folder with the `baseline.py` file defining the run itself and `main.py` providing a standard run which gives baseline results for the given dataset(s)/model
+
 ## Running Experiments
 
 Each experiment has a `main.py` file, which runs all the associated files with that experiment and outputs the results as a `.csv` file in the same directory. All results are already in each directory but are replaced when running the experiment anew
