@@ -34,6 +34,30 @@ Both models were selected to allow for testing with two different models and bas
     - Sourced from https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html
 - Linear Regression
     - Sourced from https://scikit-learn.org/dev/modules/generated/sklearn.linear_model.LinearRegression.html
+ 
+## Requirements (also found in requirements.txt)
+
+```
+pip~=23.2.1
+attrs~=23.2.0
+wheel~=0.45.0
+protobuf~=5.28.3
+cryptography~=42.0.8
+pillow~=10.2.0
+filelock~=3.16.1
+pandas~=2.2.3
+scikit-learn~=1.5.2
+aif360~=0.6.1
+numpy~=2.0.0
+matplotlib~=3.9.0
+seaborn~=0.13.2
+scipy~=1.14.1
+tqdm~=4.67.1
+statsmodels~=0.14.4
+lightgbm~=4.6.0
+xgboost~=2.1.4
+tensorflow~=2.18.0
+```
 
 ## Adaptive Masking and Baseline
 
@@ -56,18 +80,18 @@ Each experiment has a `main.py` file, which runs all the associated files with t
 - Comparison of Adaptive Masking Across Models
     - Found in the `model_generalisability` folder
     - Additional Models used are
-        - SVC (Linear Kernel) - https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html
-        - XGBC Classifier - https://xgboost.readthedocs.io/en/stable/
-        - MLP Classifier - [https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html](https://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPClassifier.html)
+        - SVC (Linear Kernel) -  Sourced from https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html
+        - XGBC Classifier - Sourced from https://xgboost.readthedocs.io/en/stable/
+        - MLP Classifier -  Sourced from [https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html](https://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPClassifier.html)
 - Comparison of Adaptive Masking against Other Mitigation Strategies
     - Found in the other_mitigation strategies folder
     - Other mitigation strategies used include
         - LFR
-            - https://aif360.readthedocs.io/en/stable/modules/generated/aif360.algorithms.preprocessing.LFR.html#aif360.algorithms.preprocessing.LFR
-            - https://proceedings.mlr.press/v28/zemel13.html
+            - Sourced from https://aif360.readthedocs.io/en/stable/modules/generated/aif360.algorithms.preprocessing.LFR.html#aif360.algorithms.preprocessing.LFR
+            - Relevant Paper: https://proceedings.mlr.press/v28/zemel13.html
         - Prejudice Remover
-            - https://aif360.readthedocs.io/en/stable/modules/generated/aif360.algorithms.inprocessing.PrejudiceRemover.html#aif360.algorithms.inprocessing.PrejudiceRemover
-            - https://link.springer.com/chapter/10.1007/978-3-642-33486-3_3
+            - Sourced from https://aif360.readthedocs.io/en/stable/modules/generated/aif360.algorithms.inprocessing.PrejudiceRemover.html#aif360.algorithms.inprocessing.PrejudiceRemover
+            - Relevant Paper: https://link.springer.com/chapter/10.1007/978-3-642-33486-3_3
         - Adversarial Debiasing
-            - https://aif360.readthedocs.io/en/stable/modules/generated/aif360.algorithms.inprocessing.AdversarialDebiasing.html#aif360.algorithms.inprocessing.AdversarialDebiasing
-            - https://dl.acm.org/doi/10.1145/3278721.3278779
+            - Sourced from https://aif360.readthedocs.io/en/stable/modules/generated/aif360.algorithms.inprocessing.AdversarialDebiasing.html#aif360.algorithms.inprocessing.AdversarialDebiasing
+            - Relevant Paper: https://dl.acm.org/doi/10.1145/3278721.3278779
