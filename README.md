@@ -1,7 +1,7 @@
 ## Overview
 
-This GitHub repo serves as the primary location of all code related to my dissertation work, which currently aims to
-propose a new bias mitigation strategy in the form of adaptive masking.
+This GitHub repo serves as the primary location of all code related to my dissertation work, which
+proposes a new in-processing bias mitigation strategy in the form of adaptive masking.
 
 ## Personnel
 
