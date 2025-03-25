@@ -84,7 +84,7 @@ Each experiment has a `main.py` file, which runs all the associated files with t
         - XGBC Classifier - Sourced from https://xgboost.readthedocs.io/en/stable/
         - MLP Classifier -  Sourced from [https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html](https://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPClassifier.html)
 - Comparison of Adaptive Masking against Other Mitigation Strategies
-    - Found in the other_mitigation strategies folder
+    - Found in the `other_mitigation` strategies folder
     - Other mitigation strategies used include
         - LFR
             - Sourced from https://aif360.readthedocs.io/en/stable/modules/generated/aif360.algorithms.preprocessing.LFR.html#aif360.algorithms.preprocessing.LFR
