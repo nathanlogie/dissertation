@@ -4,38 +4,23 @@ import numpy as np
 import pandas as pd
 
 
-def baseline_masking(x_data: Union[np.ndarray, pd.DataFrame], sensitive_attribute: str, mask: int) -> Union[np.ndarray, pd.DataFrame]:
+def baseline_masking(x_data: Union[np.ndarray, pd.DataFrame], sensitive_attribute: str, mask: int) -> Union[
+    np.ndarray, pd.DataFrame]:
     masked_data = x_data.copy()
     if sensitive_attribute in masked_data.columns:
         masked_data[sensitive_attribute] = mask
     return masked_data
-
-
-def expanded_masking(x_data: Union[np.ndarray, pd.DataFrame], sensitive_attribute: str, mask: int) -> Union[np.ndarray, pd.DataFrame]:
-    masked_data = x_data.copy()
-    threshold = 0.8
-
-    if sensitive_attribute in masked_data.columns:
-        corr_matrix = masked_data.corr().abs()
-
-        correlated_features = corr_matrix[sensitive_attribute][corr_matrix[sensitive_attribute] > threshold].index.tolist()
-
-        for feature in correlated_features:
-            masked_data[feature] = mask
-
-        masked_data[sensitive_attribute] = mask
-
-    return masked_data
-
 
 
 def create_expanded_masking_strat(threshold: float):
-    def expanded_masking(x_data: Union[np.ndarray, pd.DataFrame], sensitive_attribute: str, mask: int) -> Union[np.ndarray, pd.DataFrame]:
+    def expanded_masking(x_data: Union[np.ndarray, pd.DataFrame], sensitive_attribute: str, mask: int) -> Union[
+        np.ndarray, pd.DataFrame]:
         masked_data = x_data.copy()
         if sensitive_attribute in masked_data.columns:
             corr_matrix = masked_data.corr().abs()
 
-            correlated_features = corr_matrix[sensitive_attribute][corr_matrix[sensitive_attribute] >= threshold].index.tolist()
+            correlated_features = corr_matrix[sensitive_attribute][
+                corr_matrix[sensitive_attribute] >= threshold].index.tolist()
 
             for feature in correlated_features:
                 masked_data[feature] = mask
@@ -45,6 +30,7 @@ def create_expanded_masking_strat(threshold: float):
         return masked_data
 
     return expanded_masking
+
 
 masking_strats = [baseline_masking, create_expanded_masking_strat]
 masking_names = ["Baseline", "Expanded"]

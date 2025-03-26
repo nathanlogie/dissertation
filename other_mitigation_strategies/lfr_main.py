@@ -17,7 +17,6 @@ def lfr_main(datasets: list[dict]) -> pd.DataFrame:
         all_results.append(result)
         print(f"FInished on {dataset['name']}")
 
-
     results_df = pd.DataFrame(all_results)
     results_df["Run Type"] = "LFR"
     results_df = results_df[

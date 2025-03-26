@@ -75,8 +75,8 @@ def run_with_lfr(filepath: str, sensitive_attribute: str, target_column: str, di
     equal_opportunity_diff = classification_metric.equal_opportunity_difference()
 
     return {"Accuracy": round(accuracy, 4), "Bal. Acc.": round(bal_accuracy, 4),
-        "Precision": round(precision, 4), "Recall": round(recall, 4), "F1 Score": round(f1, 4),
-        "Disparate Impact": round(disparate_impact, 4),
-        "Statistical Parity Difference": round(statistical_parity_diff, 4),
-        "Average Odds Difference": round(average_odds_diff, 4),
-        "Equal Opportunity Difference": round(equal_opportunity_diff, 4)}
+            "Precision": round(precision, 4), "Recall": round(recall, 4), "F1 Score": round(f1, 4),
+            "Disparate Impact": round(disparate_impact, 4),
+            "Statistical Parity Difference": round(statistical_parity_diff, 4),
+            "Average Odds Difference": round(average_odds_diff, 4),
+            "Equal Opportunity Difference": round(equal_opportunity_diff, 4)}

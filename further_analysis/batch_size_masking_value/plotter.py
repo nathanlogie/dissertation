@@ -14,7 +14,6 @@ def main():
 
     fig, axes = plt.subplots(nrows=2, ncols=3, figsize=(18, 10))
 
-    # Iterate over each model (each row)
     for row_idx, model in enumerate(models):
         datasets = sorted(df[df["model"] == model]["dataset"].unique())
         for col_idx, dataset in enumerate(datasets):

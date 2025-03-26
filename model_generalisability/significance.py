@@ -1,11 +1,9 @@
-import numpy as np
 import pandas as pd
 from scipy.stats import ttest_ind
 
 df = pd.read_csv("model_generalisability.csv")
 
-metrics = ["Accuracy", "Bal. Acc.", "Prec.", "Rec.", "F1 Score",
-           "Disp. Impact", "Stat. Parity Diff.",
+metrics = ["Accuracy", "Bal. Acc.", "Prec.", "Rec.", "F1 Score", "Disp. Impact", "Stat. Parity Diff.",
            "Avg. Odds Diff.", "Eq. Opp. Diff."]
 
 counter = {metric: 0 for metric in metrics}
@@ -26,8 +24,6 @@ for model in df["Model"].unique():
                 counter[metric] += 1
 
             results[metric] = significance
-
-
 
 for metric, count in counter.items():
     print(f"{metric}: {count}")

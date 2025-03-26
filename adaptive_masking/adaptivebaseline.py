@@ -20,8 +20,8 @@ class AdaptiveBaseline:
 
     def __init__(self, model: Union[LogisticRegression, RandomForestClassifier], bias_metric: Callable,
                  threshold: float, sensitive_attribute: str,
-                 batching_function: Callable[[pd.DataFrame, str, str, int], list] = batching_strats[-1],
-                 mask: int = -1, batch_size: int = 96, masking_strategy = masking_strats[0]) -> None:
+                 batching_function: Callable[[pd.DataFrame, str, str, int], list] = batching_strats[-1], mask: int = -1,
+                 batch_size: int = 96, masking_strategy=masking_strats[0]) -> None:
 
         """
             Parameters:
@@ -31,8 +31,13 @@ class AdaptiveBaseline:
             - sensitive_attribute: Name of the sensitive attribute in the dataset.
             - batching: Function that splits the dataset into batches for training.
               Expects input as (dataframe, target column, sensitive attribute, number of batches).
+              Defaults to Random Batch Selection
             - mask: Value to use for masking sensitive attributes.
-            - num_batches: Number of batches to split training data into.
+            - batch_size: Size of each batch.
+            - masking_strategy: Function to apply masking to the sensitive attributes.
+              Expects input as (dataframe, sensitive attribute, mask value).
+              Defaults to Baseline Masking
+
             """
 
         self.model = make_pipeline(StandardScaler(), model)
@@ -55,10 +60,8 @@ class AdaptiveBaseline:
             return 0
         return bias_score
 
-    def train(self, x_train: Union[np.ndarray, pd.DataFrame],
-              y_train: Union[np.ndarray, pd.Series],
-              x_val: pd.DataFrame, y_val: pd.Series, x_test: pd.DataFrame, y_test: pd.Series,
-              show_plots: bool) -> None:
+    def train(self, x_train: Union[np.ndarray, pd.DataFrame], y_train: Union[np.ndarray, pd.Series],
+              x_val: pd.DataFrame, y_val: pd.Series, x_test: pd.DataFrame, y_test: pd.Series, show_plots: bool) -> None:
 
         """
            Train the model adaptively, applying masking if bias exceeds threshold.
@@ -114,11 +117,7 @@ class AdaptiveBaseline:
 
             # Evaluate bias on the validation set
             y_pred_val = self.model.predict(x_val)
-            val_bias_score = self.evaluate_bias(
-                y_val,
-                y_pred_val,
-                x_val[self.sensitive_attribute]
-            )
+            val_bias_score = self.evaluate_bias(y_val, y_pred_val, x_val[self.sensitive_attribute])
 
             if np.isnan(val_bias_score):
                 print(f"Skipping Batch {batch_idx + 1} due to NaN bias score")
@@ -146,8 +145,29 @@ class AdaptiveBaseline:
     def masking(self, x_data: Union[np.ndarray, pd.DataFrame]) -> Union[np.ndarray, pd.DataFrame]:
         return self.masking_strategy(x_data, self.sensitive_attribute, self.mask)
 
-    def main(self, filepath: str, sensitive_attribute: str, target_column: str,
-             display_metrics: bool = False, show_plots: bool = False) -> dict:
+    def main(self, filepath: str, sensitive_attribute: str, target_column: str, display_metrics: bool = False,
+             show_plots: bool = False) -> dict:
+        """
+        Run an adaptive masking training cycle for a model on the given dataset and compute fairness metrics.
+
+        Parameters:
+        - filepath (str): Path to the CSV file containing the dataset.
+        - sensitive_attribute (str): The column name of the sensitive attribute in the dataset.
+        - target_column (str): The column name of the target variable in the dataset.
+        - display_metrics (bool, optional): Display fairness metrics if True. Default is False.
+        - show_plots (bool, optional): Display bias score plots if True. Default is False.
+
+        Returns:
+        - dict: A dictionary containing accuracy, precision, recall, F1 score, and fairness metrics
+          such as Disparate Impact, Statistical Parity Difference, Average Odds Difference, and Equal Opportunity Difference.
+
+        The function reads the dataset from the given filepath, encodes the sensitive attribute,
+        splits the data into training and testing sets, trains the inner model using the adaptive
+        masking training pipeline, and evaluates its performance.
+        It calculates fairness metrics using the AIF360 library to
+        assess bias in the model predictions.
+        """
+
         df = pd.read_csv(filepath, header=0, skipinitialspace=True)
         df[sensitive_attribute] = LabelEncoder().fit_transform(df[sensitive_attribute])
 
@@ -169,12 +189,13 @@ class AdaptiveBaseline:
         dataset_predicted = BinaryLabelDataset(df=X_test_pred, label_names=[target_column],
                                                protected_attribute_names=[sensitive_attribute])
 
-
         metric = BinaryLabelDatasetMetric(dataset_predicted, privileged_groups=[{sensitive_attribute: 1}],
                                           unprivileged_groups=[{sensitive_attribute: 0}])
+
         classification_metric = ClassificationMetric(dataset_true, dataset_predicted,
                                                      privileged_groups=[{sensitive_attribute: 1}],
                                                      unprivileged_groups=[{sensitive_attribute: 0}])
+
         accuracy = accuracy_score(y_test, y_pred)
         bal_accuracy = balanced_accuracy_score(y_test, y_pred)
         precision = precision_score(y_test, y_pred, zero_division=1)
@@ -207,5 +228,4 @@ class AdaptiveBaseline:
             "Disparate Impact": round(disparate_impact, 4),
             "Statistical Parity Difference": round(statistical_parity_diff, 4),
             "Average Odds Difference": round(average_odds_diff, 4),
-            "Equal Opportunity Difference": round(equal_opportunity_diff, 4)
-        }
+            "Equal Opportunity Difference": round(equal_opportunity_diff, 4)}

@@ -47,7 +47,6 @@ for model in df["Model"].unique():
                 print(f"{metric}: {p_value} : {dataset} : {model}")
                 tost_counter[metric] += 1
 
-
 for metric, count in counter.items():
     print(f"{metric}: {count}")
 

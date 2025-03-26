@@ -9,8 +9,7 @@ metrics = ["Accuracy", "Bal. Acc.", "Precision", "Recall", "F1 Score",
            "Disparate Impact", "Statistical Parity Difference",
            "Average Odds Difference", "Equal Opportunity Difference"]
 
-
-counter = {metric : 0 for metric in metrics}
+counter = {metric: 0 for metric in metrics}
 
 for dataset in df["Dataset"].unique():
     curr = df[df["Dataset"] == dataset]

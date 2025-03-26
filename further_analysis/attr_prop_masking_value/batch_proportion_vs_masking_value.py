@@ -13,7 +13,6 @@ from batching_strategies.batching_strats import batching_strats
 def main():
     warnings.simplefilter(action='ignore', category=FutureWarning)
 
-    # Updated dataset configurations using new CSVs from the local 'datasets' folder
     datasets = [
         {
             "name": "Income Census",

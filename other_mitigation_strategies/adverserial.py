@@ -1,12 +1,12 @@
-import numpy as np
 import pandas as pd
 import tensorflow as tf
 from aif360.algorithms.inprocessing import AdversarialDebiasing
-from aif360.sklearn.metrics import average_odds_difference, equal_opportunity_difference
-from sklearn.model_selection import train_test_split
 from aif360.datasets import StandardDataset, BinaryLabelDataset
 from aif360.metrics import BinaryLabelDatasetMetric
+from aif360.sklearn.metrics import average_odds_difference, equal_opportunity_difference
 from sklearn.metrics import accuracy_score, balanced_accuracy_score, precision_score, recall_score, f1_score
+from sklearn.model_selection import train_test_split
+
 
 def adversarial_main(filepath, sensitive_attribute, target_column):
     tf.compat.v1.reset_default_graph()

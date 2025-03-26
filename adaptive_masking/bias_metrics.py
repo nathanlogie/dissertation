@@ -1,3 +1,4 @@
+# Sample Bias Metric - Simplistic implementation of Statistical Parity Difference
 def example_bias_metric(y_true, y_pred, sensitive_attr):
     group_0_mask = (sensitive_attr == 0)
     group_1_mask = (sensitive_attr == 1)

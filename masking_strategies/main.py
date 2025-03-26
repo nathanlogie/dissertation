@@ -64,21 +64,23 @@ def main():
 
     results_df = pd.DataFrame(all_results)
     results_df = results_df[
-        ["Dataset", "Model", "Masking Strategy"] + [col for col in results_df.columns if col not in ["Dataset", "Model","Masking Strategy"]]]
-    results_df.sort_values(["Dataset","Model", "Masking Strategy"], inplace=True)
+        ["Dataset", "Model", "Masking Strategy"] + [col for col in results_df.columns if
+                                                    col not in ["Dataset", "Model", "Masking Strategy"]]]
+    results_df.sort_values(["Dataset", "Model", "Masking Strategy"], inplace=True)
     results_df.to_csv("masking_results.csv", index=False)
 
     bias_results = results_df[[
         col for col in results_df.columns if col not in
-                                             ["Accuracy","Bal. Acc.","Precision","Recall","F1 Score"]
-        ]
+                                             ["Accuracy", "Bal. Acc.", "Precision", "Recall", "F1 Score"]
+    ]
     ]
     bias_results.to_csv("bias_only_results.csv", index=False)
 
     performance_results = results_df[[
         col for col in results_df.columns if col not in
-                                             ["Disparate Impact","Statistical Parity Difference","Average Odds Difference","Equal Opportunity Difference"]
-        ]
+                                             ["Disparate Impact", "Statistical Parity Difference",
+                                              "Average Odds Difference", "Equal Opportunity Difference"]
+    ]
     ]
     performance_results.to_csv("performance_only_results.csv", index=False)
     return results_df

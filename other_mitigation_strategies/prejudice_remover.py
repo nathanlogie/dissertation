@@ -1,11 +1,11 @@
-import numpy as np
 import pandas as pd
 from aif360.algorithms.inprocessing import PrejudiceRemover
-from aif360.sklearn.metrics import average_odds_difference, equal_opportunity_difference
-from sklearn.model_selection import train_test_split
 from aif360.datasets import StandardDataset, BinaryLabelDataset
-from aif360.metrics import BinaryLabelDatasetMetric, ClassificationMetric
+from aif360.metrics import BinaryLabelDatasetMetric
+from aif360.sklearn.metrics import average_odds_difference, equal_opportunity_difference
 from sklearn.metrics import accuracy_score, balanced_accuracy_score, precision_score, recall_score, f1_score
+from sklearn.model_selection import train_test_split
+
 
 def prejudice_main(filepath, sensitive_attribute, target_column):
     data = pd.read_csv(filepath)

@@ -61,7 +61,6 @@ def main():
                                             col not in ["Dataset","Model","Batch Size"]]]
     results_df.sort_values(by=["Dataset", "Model", "Batch Size"], inplace=True)
     results_df.to_csv("batch_size_results.csv", index=False)
-    # plot(results_df)
     bias_results = results_df[[
         col for col in results_df.columns if col not in
                                              ["Accuracy", "Bal. Acc.", "Precision", "Recall", "F1 Score"]
@@ -77,36 +76,6 @@ def main():
     ]
     performance_results.to_csv("batch_size_performance_only.csv", index=False)
     return results_df
-
-
-def plot(results_df):
-    batching_strategies = results_df
-
-    plt.figure(figsize=(10, 6))
-
-    accuracy_data = batching_strategies[["Batch Size", 'Accuracy']]
-    accuracy_data = accuracy_data.groupby("Batch Size").mean()
-    plt.plot(accuracy_data.index, accuracy_data['Accuracy'], label='Accuracy', color='blue', marker='o')
-
-    FPR_data = batching_strategies[["Batch Size", 'FPR Parity']]
-    FPR_data = FPR_data.groupby("Batch Size").mean()
-    plt.plot(FPR_data.index, FPR_data['FPR Parity'], label='FPR Parity',
-             color='red', marker='x')
-
-    PPV_data = batching_strategies[["Batch Size", 'PPV Parity']]
-    PPV_data = PPV_data.groupby("Batch Size").mean()
-    plt.plot(PPV_data.index, PPV_data['PPV Parity'], label='PPV Parity',
-             color='red', marker='x')
-
-    plt.title(f'Accuracy and Disparate Impact vs "Batch Size"')
-    plt.xlabel("Batch Size")
-    plt.ylabel('Value')
-    plt.legend()
-
-    # Show plot
-    plt.grid(True)
-    plt.show()
-
 
 if __name__ == "__main__":
     main()

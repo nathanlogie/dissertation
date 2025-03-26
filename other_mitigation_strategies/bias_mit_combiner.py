@@ -4,11 +4,13 @@ import pandas as pd
 from sklearn.exceptions import ConvergenceWarning
 from sklearn.utils._testing import ignore_warnings
 
+from adaptive_masking.main import adaptive_baseline_main
+from baseline.main import baseline_main
 from other_mitigation_strategies.adverserial import adversarial_main
 from other_mitigation_strategies.lfr import run_with_lfr
 from other_mitigation_strategies.prejudice_remover import prejudice_main
-from adaptive_masking.main import adaptive_baseline_main
-from baseline.main import baseline_main
+
+
 @ignore_warnings(category=ConvergenceWarning)
 def main():
     warnings.filterwarnings("ignore")
@@ -19,8 +21,8 @@ def main():
         ("../datasets/processed_datasets/compass.csv", "race", "two_year_recid", "Recidivism Compass")
     ]
     bias_mitigation_strategies = [
-        ("Adversarial Debiasing",adversarial_main),
-        ("Prejudice Remover",prejudice_main),
+        ("Adversarial Debiasing", adversarial_main),
+        ("Prejudice Remover", prejudice_main),
         ("LFR", run_with_lfr),
         ("Adaptive Masking", adaptive_baseline_main),
         ("Baseline", baseline_main)
@@ -43,6 +45,7 @@ def main():
         ["Run Type", "Dataset"] + [col for col in results_df.columns if col not in ["Run Type", "Dataset"]]]
     results_df.sort_values(["Dataset", "Run Type"], inplace=True)
     results_df.to_csv("combined_mitigation.csv", index=False)
+
 
 if __name__ == "__main__":
     main()

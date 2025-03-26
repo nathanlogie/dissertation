@@ -1,5 +1,5 @@
-import pandas as pd
 import numpy as np
+import pandas as pd
 
 df = pd.read_csv("batch_size_epoch_results.csv")
 

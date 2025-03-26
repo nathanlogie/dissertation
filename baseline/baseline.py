@@ -20,10 +20,13 @@ def run_baseline(filepath: str, sensitive_attribute: str, target_column: str,
     - filepath (str): Path to the CSV file containing the dataset.
     - sensitive_attribute (str): The column name of the sensitive attribute in the dataset.
     - target_column (str): The column name of the target variable in the dataset.
+    - model (Union[LogisticRegression, RandomForestClassifier]): The machine learning model to use for prediction.
+    - display_metrics (bool, optional): Whether to display the fairness metrics. Default is False.
 
     Returns:
-    - dict: A dictionary containing accuracy, precision, recall, F1 score, and fairness metrics
-      such as Disparate Impact, Statistical Parity Difference, PPV Parity, and FPR Parity.
+    - dict:
+      A dictionary containing accuracy, precision, recall, F1 score, and fairness metrics
+      such as Disparate Impact, Statistical Parity Difference, Average Odds Difference, and Equal Opportunity Difference.
 
     The function reads the dataset from the given filepath, encodes the sensitive attribute,
     splits the data into training and testing sets, trains a logistic regression model, and
@@ -71,10 +74,10 @@ def run_baseline(filepath: str, sensitive_attribute: str, target_column: str,
     f1 = f1_score(y_test, y_pred)
 
     # Bias Metrics
-    disparate_impact = metric.disparate_impact()  # Ratio of favorable outcomes
-    statistical_parity_diff = metric.statistical_parity_difference()  # Difference in favorable outcome rates
-    average_odds_diff = classification_metric.average_odds_difference()  # Average TPR and FPR difference
-    equal_opportunity_diff = classification_metric.equal_opportunity_difference()  # Difference in TPR
+    disparate_impact = metric.disparate_impact()
+    statistical_parity_diff = metric.statistical_parity_difference()
+    average_odds_diff = classification_metric.average_odds_difference()
+    equal_opportunity_diff = classification_metric.equal_opportunity_difference()
 
     if display_metrics:
         print(f'Accuracy: {accuracy}')

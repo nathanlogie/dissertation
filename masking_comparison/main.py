@@ -59,8 +59,9 @@ def main():
 
     results_df = pd.DataFrame(all_results)
     results_df = results_df[
-        ["Dataset","Model", "Masking Value"] + [col for col in results_df.columns if col not in ["Dataset", "Model","Masking Value"]]]
-    results_df.sort_values(["Dataset","Model", "Masking Value"], inplace=True)
+        ["Dataset", "Model", "Masking Value"] + [col for col in results_df.columns if
+                                                 col not in ["Dataset", "Model", "Masking Value"]]]
+    results_df.sort_values(["Dataset", "Model", "Masking Value"], inplace=True)
     results_df.to_csv("masking_results.csv", index=False)
 
     return results_df
